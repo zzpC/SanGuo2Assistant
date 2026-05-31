@@ -3,6 +3,7 @@ package com.sanguo2.assistant.ui.soldier
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,7 +19,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +48,8 @@ fun SoldierQueryScreen(
         else soldierNames.filter { it.contains(searchQuery) }
 
     var selectedSoldier by remember { mutableStateOf<Soldier?>(null) }
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
 
     selectedSoldier?.let { soldier ->
         SoldierDetailBottomSheet(
@@ -51,6 +58,16 @@ fun SoldierQueryScreen(
         )
     }
 
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                    expanded = false
+                })
+            }
+    ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -87,7 +104,8 @@ fun SoldierQueryScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .menuAnchor(),
+                    .menuAnchor()
+                    .focusRequester(focusRequester),
                 singleLine = true,
                 shape = RoundedCornerShape(12.dp)
             )
@@ -128,10 +146,15 @@ fun SoldierQueryScreen(
             AnimatedVisibility(visible = true) {
                 SoldierQueryResultContent(
                     result = result,
-                    onSoldierClick = { soldier -> selectedSoldier = soldier }
+                    onSoldierClick = { soldier ->
+                        focusManager.clearFocus()
+                        expanded = false
+                        selectedSoldier = soldier
+                    }
                 )
             }
         }
+    }
     }
 }
 
