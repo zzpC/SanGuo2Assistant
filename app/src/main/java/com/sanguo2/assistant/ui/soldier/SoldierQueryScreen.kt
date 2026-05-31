@@ -2,31 +2,30 @@ package com.sanguo2.assistant.ui.soldier
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.MilitaryTech
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sanguo2.assistant.data.model.CounterSoldier
+import com.sanguo2.assistant.data.model.Soldier
 import com.sanguo2.assistant.data.model.SoldierQueryResult
+import com.sanguo2.assistant.ui.components.SoldierDetailBottomSheet
 import com.sanguo2.assistant.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,6 +41,15 @@ fun SoldierQueryScreen(
     val soldierNames by viewModel.soldierNames.collectAsState()
     val filteredNames = if (searchQuery.isBlank()) soldierNames
         else soldierNames.filter { it.contains(searchQuery) }
+
+    var selectedSoldier by remember { mutableStateOf<Soldier?>(null) }
+
+    selectedSoldier?.let { soldier ->
+        SoldierDetailBottomSheet(
+            soldier = soldier,
+            onDismiss = { selectedSoldier = null }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -118,20 +126,29 @@ fun SoldierQueryScreen(
 
         queryResult?.let { result ->
             AnimatedVisibility(visible = true) {
-                SoldierQueryResultContent(result)
+                SoldierQueryResultContent(
+                    result = result,
+                    onSoldierClick = { soldier -> selectedSoldier = soldier }
+                )
             }
         }
     }
 }
 
 @Composable
-private fun SoldierQueryResultContent(result: SoldierQueryResult) {
+private fun SoldierQueryResultContent(
+    result: SoldierQueryResult,
+    onSoldierClick: (Soldier) -> Unit
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
-            EnemySoldierCard(result)
+            EnemySoldierCard(
+                result = result,
+                onClick = { onSoldierClick(result.enemySoldier) }
+            )
         }
 
         item {
@@ -159,7 +176,10 @@ private fun SoldierQueryResultContent(result: SoldierQueryResult) {
         }
 
         items(result.counterSoldiers) { counter ->
-            CounterSoldierCard(counter)
+            CounterSoldierCard(
+                counter = counter,
+                onClick = { onSoldierClick(counter.soldier) }
+            )
         }
 
         if (result.counterSoldiers.isEmpty()) {
@@ -181,14 +201,26 @@ private fun SoldierQueryResultContent(result: SoldierQueryResult) {
 }
 
 @Composable
-private fun EnemySoldierCard(result: SoldierQueryResult) {
+private fun EnemySoldierCard(
+    result: SoldierQueryResult,
+    onClick: () -> Unit
+) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            ),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = "敌方兵种",
                     style = MaterialTheme.typography.labelMedium,
@@ -203,6 +235,13 @@ private fun EnemySoldierCard(result: SoldierQueryResult) {
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 RangeTypeChip(result.enemySoldier.rangeType)
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(
+                    Icons.Default.Info,
+                    contentDescription = "查看详情",
+                    tint = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.6f),
+                    modifier = Modifier.size(20.dp)
+                )
             }
             if (result.enemySoldier.description.isNotBlank()) {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -212,6 +251,12 @@ private fun EnemySoldierCard(result: SoldierQueryResult) {
                     color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.8f)
                 )
             }
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "点击查看详细信息 →",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onErrorContainer.copy(alpha = 0.5f)
+            )
         }
     }
 }
@@ -232,7 +277,10 @@ private fun RushInfoCard(rushInfo: String) {
 }
 
 @Composable
-private fun CounterSoldierCard(counter: CounterSoldier) {
+private fun CounterSoldierCard(
+    counter: CounterSoldier,
+    onClick: () -> Unit
+) {
     val progressFraction = (counter.restraintValue.toFloat() / 72f).coerceIn(0f, 1f)
     val barColor = when {
         counter.restraintValue >= 50 -> Green700
@@ -241,7 +289,13 @@ private fun CounterSoldierCard(counter: CounterSoldier) {
     }
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = onClick
+            ),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -260,12 +314,21 @@ private fun CounterSoldierCard(counter: CounterSoldier) {
                     Spacer(modifier = Modifier.width(8.dp))
                     RangeTypeChip(counter.rangeType)
                 }
-                Text(
-                    text = "+${counter.restraintValue}",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = barColor
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "+${counter.restraintValue}",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = barColor
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Icon(
+                        Icons.Default.Info,
+                        contentDescription = "详情",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
 
             if (counter.soldier.description.isNotBlank()) {
@@ -288,6 +351,19 @@ private fun CounterSoldierCard(counter: CounterSoldier) {
                 color = barColor,
                 trackColor = Gray200
             )
+
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = "点击查看详情",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                )
+            }
         }
     }
 }
