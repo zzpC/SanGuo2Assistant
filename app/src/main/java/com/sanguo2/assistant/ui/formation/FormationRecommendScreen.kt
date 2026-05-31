@@ -2,8 +2,6 @@ package com.sanguo2.assistant.ui.formation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,7 +30,7 @@ import com.sanguo2.assistant.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun FormationRecommendScreen(
-    viewModel: FormationRecommendViewModel = hiltViewModel()
+    viewModel: FormationRecommendViewModel = hiltViewModel(),
 ) {
     val queryResult by viewModel.queryResult.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -61,12 +59,11 @@ fun FormationRecommendScreen(
 
         FormationSelector(
             formationNames = formationNames,
-            selectedFormation = selectedFormation,
-            onFormationSelected = { name ->
-                viewModel.onFormationSelected(name)
-                viewModel.queryFormation(name)
-            }
-        )
+            selectedFormation = selectedFormation
+        ) { name ->
+            viewModel.onFormationSelected(name)
+            viewModel.queryFormation(name)
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 

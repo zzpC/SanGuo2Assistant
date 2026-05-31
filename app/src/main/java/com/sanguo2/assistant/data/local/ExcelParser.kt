@@ -36,24 +36,32 @@ class ExcelParser {
                 }
                 val rangeType = rangeMap[name] ?: "半远程"
                 val rangeValue = rangeValueMap[rangeType] ?: 2
-                val counters = restraint.filter { it.value > 0 }
+                val counters = restraint.asSequence()
+                    .filter { it.value > 0 }
                     .map { CounterInfo(it.key, it.value) }
                     .sortedByDescending { it.value }
-                val counteredBy = restraint.filter { it.value < 0 }
+                    .toList()
+                val counteredBy = restraint.asSequence()
+                    .filter { it.value < 0 }
                     .map { CounterInfo(it.key, -it.value) }
                     .sortedByDescending { it.value }
-                soldiers.add(Soldier(
-                    id = i - 1, name = name, description = desc,
-                    rangeType = rangeType, rangeValue = rangeValue,
-                    infantryRange = row.getCell(30)?.numericCellValue?.toInt(),
-                    cavalryRange = row.getCell(31)?.numericCellValue?.toInt(),
-                    infantryRangedSpeed = row.getCell(32)?.numericCellValue?.toInt(),
-                    infantryMeleeSpeed = row.getCell(33)?.numericCellValue?.toInt(),
-                    cavalryRangedSpeed = row.getCell(34)?.numericCellValue?.toInt(),
-                    cavalryMeleeSpeed = row.getCell(35)?.numericCellValue?.toInt(),
-                    totalRestraint = row.getCell(36)?.numericCellValue?.toInt() ?: 0,
-                    restraint = restraint, counters = counters, counteredBy = counteredBy
-                ))
+                    .toList()
+                soldiers.add(
+                    Soldier(
+                        id = i - 1, name = name, description = desc,
+                        rangeType = rangeType, rangeValue = rangeValue,
+                        infantryRange = row.getCell(30)?.numericCellValue?.toInt(),
+                        cavalryRange = row.getCell(31)?.numericCellValue?.toInt(),
+                        infantryRangedSpeed = row.getCell(32)?.numericCellValue?.toInt(),
+                        infantryMeleeSpeed = row.getCell(33)?.numericCellValue?.toInt(),
+                        cavalryRangedSpeed = row.getCell(34)?.numericCellValue?.toInt(),
+                        cavalryMeleeSpeed = row.getCell(35)?.numericCellValue?.toInt(),
+                        totalRestraint = row.getCell(36)?.numericCellValue?.toInt() ?: 0,
+                        restraint = restraint,
+                        counters = counters,
+                        counteredBy = counteredBy
+                    )
+                )
             }
 
             val formationNames = mutableListOf<String>()
@@ -73,16 +81,25 @@ class ExcelParser {
                     val value = cell?.numericCellValue?.toInt() ?: 0
                     restraint[formationNames[j]] = value
                 }
-                val counters = restraint.filter { it.value > 0 }
+                val counters = restraint.asSequence()
+                    .filter { it.value > 0 }
                     .map { CounterInfo(it.key, it.value) }
                     .sortedByDescending { it.value }
-                val counteredBy = restraint.filter { it.value < 0 }
+                    .toList()
+                val counteredBy = restraint.asSequence()
+                    .filter { it.value < 0 }
                     .map { CounterInfo(it.key, -it.value) }
                     .sortedByDescending { it.value }
-                formations.add(Formation(
-                    id = i, name = formationNames[i],
-                    restraint = restraint, counters = counters, counteredBy = counteredBy
-                ))
+                    .toList()
+                formations.add(
+                    Formation(
+                        id = i,
+                        name = formationNames[i],
+                        restraint = restraint,
+                        counters = counters,
+                        counteredBy = counteredBy,
+                    )
+                )
             }
 
             workbook.close()
@@ -104,24 +121,24 @@ class ExcelParser {
             val sheet = workbook.getSheetAt(0)
             if (sheet.physicalNumberOfRows < 28) {
                 workbook.close()
-                return ValidationResult(false, "数据行数不足，至少需要28行数据")
+                ValidationResult(isValid = false, message = "数据行数不足，至少需要28行数据")
             }
             val headerRow = sheet.getRow(0)
             if (headerRow == null) {
                 workbook.close()
-                return ValidationResult(false, "缺少表头行")
+                return ValidationResult(isValid = false, message = "缺少表头行")
             }
             val firstSoldierRow = sheet.getRow(1)
-            if (firstSoldierRow == null || firstSoldierRow.getCell(1)?.stringCellValue.isNullOrBlank()) {
+            if ((firstSoldierRow == null) || (firstSoldierRow.getCell(1)?.stringCellValue.isNullOrBlank())) {
                 workbook.close()
-                return ValidationResult(false, "兵种数据格式异常：第2行B列应为兵种名称")
+                return ValidationResult(isValid = false, message = "兵种数据格式异常：第2行B列应为兵种名称")
             }
             workbook.close()
             ValidationResult(true, "格式验证通过")
-        } catch (e: org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException) {
-            ValidationResult(false, "文件不是有效的Excel(.xlsx)格式，请检查文件类型")
+        } catch (_: org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException) {
+            ValidationResult(isValid = false, message = "文件不是有效的Excel(.xlsx)格式，请检查文件类型")
         } catch (e: Exception) {
-            ValidationResult(false, "文件解析失败：${e.message}")
+            ValidationResult(isValid = false, message = "文件解析失败：${e.message ?: "未知错误"}")
         }
     }
 }

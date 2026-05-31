@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
@@ -36,13 +35,13 @@ import com.sanguo2.assistant.ui.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SoldierQueryScreen(
-    viewModel: SoldierQueryViewModel = hiltViewModel()
+    viewModel: SoldierQueryViewModel = hiltViewModel(),
 ) {
     val queryResult by viewModel.queryResult.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(value = false) }
     val soldierNames by viewModel.soldierNames.collectAsState()
     val filteredNames = if (searchQuery.isBlank()) soldierNames
         else soldierNames.filter { it.contains(searchQuery) }
@@ -54,18 +53,17 @@ fun SoldierQueryScreen(
     selectedSoldier?.let { soldier ->
         SoldierDetailBottomSheet(
             soldier = soldier,
-            onDismiss = { selectedSoldier = null }
-        )
+        ) { selectedSoldier = null }
     }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {
-                detectTapGestures(onTap = {
+                detectTapGestures {
                     focusManager.clearFocus()
                     expanded = false
-                })
+                }
             }
     ) {
     Column(
@@ -94,10 +92,12 @@ fun SoldierQueryScreen(
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = {
-                            viewModel.onSearchQueryChanged("")
-                            viewModel.clearResult()
-                        }) {
+                        IconButton(
+                            onClick = {
+                                viewModel.onSearchQueryChanged("")
+                                viewModel.clearResult()
+                            }
+                        ) {
                             Icon(Icons.Default.Clear, contentDescription = "清除")
                         }
                     }
@@ -145,13 +145,12 @@ fun SoldierQueryScreen(
         queryResult?.let { result ->
             AnimatedVisibility(visible = true) {
                 SoldierQueryResultContent(
-                    result = result,
-                    onSoldierClick = { soldier ->
-                        focusManager.clearFocus()
-                        expanded = false
-                        selectedSoldier = soldier
-                    }
-                )
+                    result = result
+                ) { soldier ->
+                    focusManager.clearFocus()
+                    expanded = false
+                    selectedSoldier = soldier
+                }
             }
         }
     }
