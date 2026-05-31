@@ -1,0 +1,6 @@
+-keepattributes *Annotation*
+-keep class com.sanguo2.assistant.data.model.** { *; }
+-keep class org.apache.poi.** { *; }
+-dontwarn org.apache.poi.**
+-dontwarn org.apache.xmlbeans.**
+-dontwarn org.openxmlformats.**

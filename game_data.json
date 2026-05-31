@@ -1,0 +1,4265 @@
+{
+  "version": "1.4+",
+  "rushRule": "26个兵种分为三档射程，朴刀、蛮族、黄巾纯近战（1），弓箭、弩兵、白马真远程（3），其他都是半远程（2），1见到23都会全突，2见到3会全突。",
+  "speedNote": "攻速数字越大，攻速越慢。骑兵即高级兵的意思。",
+  "readingNote": "此表请横向查阅，举例：朴刀对长枪-43，说明长枪克朴刀43点。",
+  "soldiers": [
+    {
+      "id": 0,
+      "name": "朴刀",
+      "description": "",
+      "rangeType": "近战",
+      "rangeValue": 1,
+      "infantryRange": 1,
+      "cavalryRange": 1,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -223,
+      "restraint": {
+        "朴刀": 0,
+        "长枪": -43,
+        "大刀": -52,
+        "弓箭": 61,
+        "链锤": -42,
+        "飞刀": 63,
+        "武斗": 21,
+        "蛮族": -44,
+        "铁锤": -54,
+        "藤甲": -31,
+        "黄巾": 23,
+        "弩兵": -8,
+        "女兵": -10,
+        "虎豹": 10,
+        "陷阵": -5,
+        "白马": 41,
+        "无当": 57,
+        "西凉": -50,
+        "白毦": -53,
+        "金甲": -10,
+        "解烦": -12,
+        "猛兽": -46,
+        "战车": -35,
+        "尸兵": -49,
+        "刺客": 60,
+        "巫女": -15
+      },
+      "counters": [
+        {
+          "name": "飞刀",
+          "value": 63
+        },
+        {
+          "name": "弓箭",
+          "value": 61
+        },
+        {
+          "name": "刺客",
+          "value": 60
+        },
+        {
+          "name": "无当",
+          "value": 57
+        },
+        {
+          "name": "白马",
+          "value": 41
+        },
+        {
+          "name": "黄巾",
+          "value": 23
+        },
+        {
+          "name": "武斗",
+          "value": 21
+        },
+        {
+          "name": "虎豹",
+          "value": 10
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "铁锤",
+          "value": 54
+        },
+        {
+          "name": "白毦",
+          "value": 53
+        },
+        {
+          "name": "大刀",
+          "value": 52
+        },
+        {
+          "name": "西凉",
+          "value": 50
+        },
+        {
+          "name": "尸兵",
+          "value": 49
+        },
+        {
+          "name": "猛兽",
+          "value": 46
+        },
+        {
+          "name": "蛮族",
+          "value": 44
+        },
+        {
+          "name": "长枪",
+          "value": 43
+        },
+        {
+          "name": "链锤",
+          "value": 42
+        },
+        {
+          "name": "战车",
+          "value": 35
+        },
+        {
+          "name": "藤甲",
+          "value": 31
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "解烦",
+          "value": 12
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        },
+        {
+          "name": "弩兵",
+          "value": 8
+        },
+        {
+          "name": "陷阵",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "长枪",
+      "description": "",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 1,
+      "cavalryRange": 5,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -232,
+      "restraint": {
+        "朴刀": 43,
+        "长枪": 0,
+        "大刀": -12,
+        "弓箭": -44,
+        "链锤": -21,
+        "飞刀": -31,
+        "武斗": 50,
+        "蛮族": 41,
+        "铁锤": -48,
+        "藤甲": -34,
+        "黄巾": 24,
+        "弩兵": -35,
+        "女兵": 39,
+        "虎豹": -30,
+        "陷阵": 38,
+        "白马": -49,
+        "无当": -36,
+        "西凉": -26,
+        "白毦": -15,
+        "金甲": -10,
+        "解烦": 19,
+        "猛兽": 25,
+        "战车": -31,
+        "尸兵": -38,
+        "刺客": -36,
+        "巫女": -15
+      },
+      "counters": [
+        {
+          "name": "武斗",
+          "value": 50
+        },
+        {
+          "name": "朴刀",
+          "value": 43
+        },
+        {
+          "name": "蛮族",
+          "value": 41
+        },
+        {
+          "name": "女兵",
+          "value": 39
+        },
+        {
+          "name": "陷阵",
+          "value": 38
+        },
+        {
+          "name": "猛兽",
+          "value": 25
+        },
+        {
+          "name": "黄巾",
+          "value": 24
+        },
+        {
+          "name": "解烦",
+          "value": 19
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "白马",
+          "value": 49
+        },
+        {
+          "name": "铁锤",
+          "value": 48
+        },
+        {
+          "name": "弓箭",
+          "value": 44
+        },
+        {
+          "name": "尸兵",
+          "value": 38
+        },
+        {
+          "name": "无当",
+          "value": 36
+        },
+        {
+          "name": "刺客",
+          "value": 36
+        },
+        {
+          "name": "弩兵",
+          "value": 35
+        },
+        {
+          "name": "藤甲",
+          "value": 34
+        },
+        {
+          "name": "飞刀",
+          "value": 31
+        },
+        {
+          "name": "战车",
+          "value": 31
+        },
+        {
+          "name": "虎豹",
+          "value": 30
+        },
+        {
+          "name": "西凉",
+          "value": 26
+        },
+        {
+          "name": "链锤",
+          "value": 21
+        },
+        {
+          "name": "白毦",
+          "value": 15
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "大刀",
+          "value": 12
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "大刀",
+      "description": "",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 5,
+      "cavalryRange": 1,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -39,
+      "restraint": {
+        "朴刀": 52,
+        "长枪": 12,
+        "大刀": 0,
+        "弓箭": -47,
+        "链锤": 52,
+        "飞刀": -30,
+        "武斗": 56,
+        "蛮族": 36,
+        "铁锤": -51,
+        "藤甲": -40,
+        "黄巾": 38,
+        "弩兵": -28,
+        "女兵": -10,
+        "虎豹": -32,
+        "陷阵": 47,
+        "白马": -52,
+        "无当": -35,
+        "西凉": -23,
+        "白毦": 11,
+        "金甲": -10,
+        "解烦": 33,
+        "猛兽": 31,
+        "战车": 42,
+        "尸兵": -41,
+        "刺客": -35,
+        "巫女": -15
+      },
+      "counters": [
+        {
+          "name": "武斗",
+          "value": 56
+        },
+        {
+          "name": "朴刀",
+          "value": 52
+        },
+        {
+          "name": "链锤",
+          "value": 52
+        },
+        {
+          "name": "陷阵",
+          "value": 47
+        },
+        {
+          "name": "战车",
+          "value": 42
+        },
+        {
+          "name": "黄巾",
+          "value": 38
+        },
+        {
+          "name": "蛮族",
+          "value": 36
+        },
+        {
+          "name": "解烦",
+          "value": 33
+        },
+        {
+          "name": "猛兽",
+          "value": 31
+        },
+        {
+          "name": "长枪",
+          "value": 12
+        },
+        {
+          "name": "白毦",
+          "value": 11
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "白马",
+          "value": 52
+        },
+        {
+          "name": "铁锤",
+          "value": 51
+        },
+        {
+          "name": "弓箭",
+          "value": 47
+        },
+        {
+          "name": "尸兵",
+          "value": 41
+        },
+        {
+          "name": "藤甲",
+          "value": 40
+        },
+        {
+          "name": "无当",
+          "value": 35
+        },
+        {
+          "name": "刺客",
+          "value": 35
+        },
+        {
+          "name": "虎豹",
+          "value": 32
+        },
+        {
+          "name": "飞刀",
+          "value": 30
+        },
+        {
+          "name": "弩兵",
+          "value": 28
+        },
+        {
+          "name": "西凉",
+          "value": 23
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "弓箭",
+      "description": "",
+      "rangeType": "远程",
+      "rangeValue": 3,
+      "infantryRange": 35,
+      "cavalryRange": 99,
+      "infantryRangedSpeed": 4,
+      "infantryMeleeSpeed": 3,
+      "cavalryRangedSpeed": 3,
+      "cavalryMeleeSpeed": 2,
+      "totalRestraint": -188,
+      "restraint": {
+        "朴刀": -61,
+        "长枪": 44,
+        "大刀": 47,
+        "弓箭": 0,
+        "链锤": 41,
+        "飞刀": 8,
+        "武斗": -66,
+        "蛮族": -62,
+        "铁锤": 45,
+        "藤甲": -66,
+        "黄巾": -18,
+        "弩兵": 25,
+        "女兵": 29,
+        "虎豹": 15,
+        "陷阵": -69,
+        "白马": -10,
+        "无当": 3,
+        "西凉": 24,
+        "白毦": 29,
+        "金甲": -20,
+        "解烦": -59,
+        "猛兽": -69,
+        "战车": -31,
+        "尸兵": -20,
+        "刺客": 38,
+        "巫女": 15
+      },
+      "counters": [
+        {
+          "name": "大刀",
+          "value": 47
+        },
+        {
+          "name": "铁锤",
+          "value": 45
+        },
+        {
+          "name": "长枪",
+          "value": 44
+        },
+        {
+          "name": "链锤",
+          "value": 41
+        },
+        {
+          "name": "刺客",
+          "value": 38
+        },
+        {
+          "name": "女兵",
+          "value": 29
+        },
+        {
+          "name": "白毦",
+          "value": 29
+        },
+        {
+          "name": "弩兵",
+          "value": 25
+        },
+        {
+          "name": "西凉",
+          "value": 24
+        },
+        {
+          "name": "虎豹",
+          "value": 15
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "飞刀",
+          "value": 8
+        },
+        {
+          "name": "无当",
+          "value": 3
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "陷阵",
+          "value": 69
+        },
+        {
+          "name": "猛兽",
+          "value": 69
+        },
+        {
+          "name": "武斗",
+          "value": 66
+        },
+        {
+          "name": "藤甲",
+          "value": 66
+        },
+        {
+          "name": "蛮族",
+          "value": 62
+        },
+        {
+          "name": "朴刀",
+          "value": 61
+        },
+        {
+          "name": "解烦",
+          "value": 59
+        },
+        {
+          "name": "战车",
+          "value": 31
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "尸兵",
+          "value": 20
+        },
+        {
+          "name": "黄巾",
+          "value": 18
+        },
+        {
+          "name": "白马",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "链锤",
+      "description": "",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 10,
+      "cavalryRange": 15,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -42,
+      "restraint": {
+        "朴刀": 42,
+        "长枪": 21,
+        "大刀": -52,
+        "弓箭": -41,
+        "链锤": 0,
+        "飞刀": -25,
+        "武斗": -51,
+        "蛮族": 31,
+        "铁锤": -48,
+        "藤甲": 45,
+        "黄巾": -4,
+        "弩兵": -37,
+        "女兵": 32,
+        "虎豹": -27,
+        "陷阵": 33,
+        "白马": -45,
+        "无当": -30,
+        "西凉": -14,
+        "白毦": 16,
+        "金甲": -20,
+        "解烦": 23,
+        "猛兽": 36,
+        "战车": 45,
+        "尸兵": 26,
+        "刺客": -28,
+        "巫女": 30
+      },
+      "counters": [
+        {
+          "name": "藤甲",
+          "value": 45
+        },
+        {
+          "name": "战车",
+          "value": 45
+        },
+        {
+          "name": "朴刀",
+          "value": 42
+        },
+        {
+          "name": "猛兽",
+          "value": 36
+        },
+        {
+          "name": "陷阵",
+          "value": 33
+        },
+        {
+          "name": "女兵",
+          "value": 32
+        },
+        {
+          "name": "蛮族",
+          "value": 31
+        },
+        {
+          "name": "巫女",
+          "value": 30
+        },
+        {
+          "name": "尸兵",
+          "value": 26
+        },
+        {
+          "name": "解烦",
+          "value": 23
+        },
+        {
+          "name": "长枪",
+          "value": 21
+        },
+        {
+          "name": "白毦",
+          "value": 16
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "大刀",
+          "value": 52
+        },
+        {
+          "name": "武斗",
+          "value": 51
+        },
+        {
+          "name": "铁锤",
+          "value": 48
+        },
+        {
+          "name": "白马",
+          "value": 45
+        },
+        {
+          "name": "弓箭",
+          "value": 41
+        },
+        {
+          "name": "弩兵",
+          "value": 37
+        },
+        {
+          "name": "无当",
+          "value": 30
+        },
+        {
+          "name": "刺客",
+          "value": 28
+        },
+        {
+          "name": "虎豹",
+          "value": 27
+        },
+        {
+          "name": "飞刀",
+          "value": 25
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "西凉",
+          "value": 14
+        },
+        {
+          "name": "黄巾",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "飞刀",
+      "description": "",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 15,
+      "cavalryRange": 25,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -176,
+      "restraint": {
+        "朴刀": -63,
+        "长枪": 31,
+        "大刀": 30,
+        "弓箭": -8,
+        "链锤": 25,
+        "飞刀": 0,
+        "武斗": -67,
+        "蛮族": -60,
+        "铁锤": 28,
+        "藤甲": -72,
+        "黄巾": -10,
+        "弩兵": 40,
+        "女兵": -10,
+        "虎豹": 40,
+        "陷阵": -70,
+        "白马": -13,
+        "无当": -5,
+        "西凉": 41,
+        "白毦": 26,
+        "金甲": -20,
+        "解烦": -55,
+        "猛兽": -27,
+        "战车": -25,
+        "尸兵": 23,
+        "刺客": 30,
+        "巫女": 15
+      },
+      "counters": [
+        {
+          "name": "西凉",
+          "value": 41
+        },
+        {
+          "name": "弩兵",
+          "value": 40
+        },
+        {
+          "name": "虎豹",
+          "value": 40
+        },
+        {
+          "name": "长枪",
+          "value": 31
+        },
+        {
+          "name": "大刀",
+          "value": 30
+        },
+        {
+          "name": "刺客",
+          "value": 30
+        },
+        {
+          "name": "铁锤",
+          "value": 28
+        },
+        {
+          "name": "白毦",
+          "value": 26
+        },
+        {
+          "name": "链锤",
+          "value": 25
+        },
+        {
+          "name": "尸兵",
+          "value": 23
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "藤甲",
+          "value": 72
+        },
+        {
+          "name": "陷阵",
+          "value": 70
+        },
+        {
+          "name": "武斗",
+          "value": 67
+        },
+        {
+          "name": "朴刀",
+          "value": 63
+        },
+        {
+          "name": "蛮族",
+          "value": 60
+        },
+        {
+          "name": "解烦",
+          "value": 55
+        },
+        {
+          "name": "猛兽",
+          "value": 27
+        },
+        {
+          "name": "战车",
+          "value": 25
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "白马",
+          "value": 13
+        },
+        {
+          "name": "黄巾",
+          "value": 10
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "弓箭",
+          "value": 8
+        },
+        {
+          "name": "无当",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "武斗",
+      "description": "",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 1,
+      "cavalryRange": 5,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 142,
+      "restraint": {
+        "朴刀": -21,
+        "长枪": -50,
+        "大刀": -56,
+        "弓箭": 66,
+        "链锤": 51,
+        "飞刀": 67,
+        "武斗": 0,
+        "蛮族": 8,
+        "铁锤": 37,
+        "藤甲": 36,
+        "黄巾": 3,
+        "弩兵": -13,
+        "女兵": -10,
+        "虎豹": 23,
+        "陷阵": -26,
+        "白马": 59,
+        "无当": 55,
+        "西凉": -51,
+        "白毦": -55,
+        "金甲": -10,
+        "解烦": -27,
+        "猛兽": -15,
+        "战车": -16,
+        "尸兵": 36,
+        "刺客": 10,
+        "巫女": 41
+      },
+      "counters": [
+        {
+          "name": "飞刀",
+          "value": 67
+        },
+        {
+          "name": "弓箭",
+          "value": 66
+        },
+        {
+          "name": "白马",
+          "value": 59
+        },
+        {
+          "name": "无当",
+          "value": 55
+        },
+        {
+          "name": "链锤",
+          "value": 51
+        },
+        {
+          "name": "巫女",
+          "value": 41
+        },
+        {
+          "name": "铁锤",
+          "value": 37
+        },
+        {
+          "name": "藤甲",
+          "value": 36
+        },
+        {
+          "name": "尸兵",
+          "value": 36
+        },
+        {
+          "name": "虎豹",
+          "value": 23
+        },
+        {
+          "name": "刺客",
+          "value": 10
+        },
+        {
+          "name": "蛮族",
+          "value": 8
+        },
+        {
+          "name": "黄巾",
+          "value": 3
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "大刀",
+          "value": 56
+        },
+        {
+          "name": "白毦",
+          "value": 55
+        },
+        {
+          "name": "西凉",
+          "value": 51
+        },
+        {
+          "name": "长枪",
+          "value": 50
+        },
+        {
+          "name": "解烦",
+          "value": 27
+        },
+        {
+          "name": "陷阵",
+          "value": 26
+        },
+        {
+          "name": "朴刀",
+          "value": 21
+        },
+        {
+          "name": "战车",
+          "value": 16
+        },
+        {
+          "name": "猛兽",
+          "value": 15
+        },
+        {
+          "name": "弩兵",
+          "value": 13
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "蛮族",
+      "description": "",
+      "rangeType": "近战",
+      "rangeValue": 1,
+      "infantryRange": 1,
+      "cavalryRange": 1,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -167,
+      "restraint": {
+        "朴刀": 44,
+        "长枪": -41,
+        "大刀": -36,
+        "弓箭": 62,
+        "链锤": -31,
+        "飞刀": 60,
+        "武斗": -8,
+        "蛮族": 0,
+        "铁锤": -41,
+        "藤甲": -27,
+        "黄巾": -30,
+        "弩兵": -10,
+        "女兵": -10,
+        "虎豹": -20,
+        "陷阵": 36,
+        "白马": -26,
+        "无当": 58,
+        "西凉": -56,
+        "白毦": 46,
+        "金甲": -10,
+        "解烦": -24,
+        "猛兽": 23,
+        "战车": -38,
+        "尸兵": -46,
+        "刺客": -17,
+        "巫女": -25
+      },
+      "counters": [
+        {
+          "name": "弓箭",
+          "value": 62
+        },
+        {
+          "name": "飞刀",
+          "value": 60
+        },
+        {
+          "name": "无当",
+          "value": 58
+        },
+        {
+          "name": "白毦",
+          "value": 46
+        },
+        {
+          "name": "朴刀",
+          "value": 44
+        },
+        {
+          "name": "陷阵",
+          "value": 36
+        },
+        {
+          "name": "猛兽",
+          "value": 23
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "西凉",
+          "value": 56
+        },
+        {
+          "name": "尸兵",
+          "value": 46
+        },
+        {
+          "name": "长枪",
+          "value": 41
+        },
+        {
+          "name": "铁锤",
+          "value": 41
+        },
+        {
+          "name": "战车",
+          "value": 38
+        },
+        {
+          "name": "大刀",
+          "value": 36
+        },
+        {
+          "name": "链锤",
+          "value": 31
+        },
+        {
+          "name": "黄巾",
+          "value": 30
+        },
+        {
+          "name": "藤甲",
+          "value": 27
+        },
+        {
+          "name": "白马",
+          "value": 26
+        },
+        {
+          "name": "巫女",
+          "value": 25
+        },
+        {
+          "name": "解烦",
+          "value": 24
+        },
+        {
+          "name": "虎豹",
+          "value": 20
+        },
+        {
+          "name": "刺客",
+          "value": 17
+        },
+        {
+          "name": "弩兵",
+          "value": 10
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        },
+        {
+          "name": "武斗",
+          "value": 8
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "铁锤",
+      "description": "",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 5,
+      "cavalryRange": 5,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 2,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 339,
+      "restraint": {
+        "朴刀": 54,
+        "长枪": 48,
+        "大刀": 51,
+        "弓箭": -45,
+        "链锤": 48,
+        "飞刀": -28,
+        "武斗": -37,
+        "蛮族": 41,
+        "铁锤": 0,
+        "藤甲": 54,
+        "黄巾": 27,
+        "弩兵": -33,
+        "女兵": 36,
+        "虎豹": -33,
+        "陷阵": 49,
+        "白马": -50,
+        "无当": -33,
+        "西凉": -12,
+        "白毦": 43,
+        "金甲": -10,
+        "解烦": 22,
+        "猛兽": 42,
+        "战车": 58,
+        "尸兵": 25,
+        "刺客": -33,
+        "巫女": 55
+      },
+      "counters": [
+        {
+          "name": "战车",
+          "value": 58
+        },
+        {
+          "name": "巫女",
+          "value": 55
+        },
+        {
+          "name": "朴刀",
+          "value": 54
+        },
+        {
+          "name": "藤甲",
+          "value": 54
+        },
+        {
+          "name": "大刀",
+          "value": 51
+        },
+        {
+          "name": "陷阵",
+          "value": 49
+        },
+        {
+          "name": "长枪",
+          "value": 48
+        },
+        {
+          "name": "链锤",
+          "value": 48
+        },
+        {
+          "name": "白毦",
+          "value": 43
+        },
+        {
+          "name": "猛兽",
+          "value": 42
+        },
+        {
+          "name": "蛮族",
+          "value": 41
+        },
+        {
+          "name": "女兵",
+          "value": 36
+        },
+        {
+          "name": "黄巾",
+          "value": 27
+        },
+        {
+          "name": "尸兵",
+          "value": 25
+        },
+        {
+          "name": "解烦",
+          "value": 22
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "白马",
+          "value": 50
+        },
+        {
+          "name": "弓箭",
+          "value": 45
+        },
+        {
+          "name": "武斗",
+          "value": 37
+        },
+        {
+          "name": "弩兵",
+          "value": 33
+        },
+        {
+          "name": "虎豹",
+          "value": 33
+        },
+        {
+          "name": "无当",
+          "value": 33
+        },
+        {
+          "name": "刺客",
+          "value": 33
+        },
+        {
+          "name": "飞刀",
+          "value": 28
+        },
+        {
+          "name": "西凉",
+          "value": 12
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "藤甲",
+      "description": "被火系武将技打了会额外增伤",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 1,
+      "cavalryRange": 15,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 427,
+      "restraint": {
+        "朴刀": 31,
+        "长枪": 34,
+        "大刀": 40,
+        "弓箭": 66,
+        "链锤": -45,
+        "飞刀": 72,
+        "武斗": -36,
+        "蛮族": 27,
+        "铁锤": -54,
+        "藤甲": 0,
+        "黄巾": 24,
+        "弩兵": 26,
+        "女兵": -10,
+        "虎豹": 26,
+        "陷阵": 32,
+        "白马": 54,
+        "无当": 67,
+        "西凉": 31,
+        "白毦": 49,
+        "金甲": -10,
+        "解烦": 29,
+        "猛兽": -41,
+        "战车": -41,
+        "尸兵": 9,
+        "刺客": 67,
+        "巫女": -20
+      },
+      "counters": [
+        {
+          "name": "飞刀",
+          "value": 72
+        },
+        {
+          "name": "无当",
+          "value": 67
+        },
+        {
+          "name": "刺客",
+          "value": 67
+        },
+        {
+          "name": "弓箭",
+          "value": 66
+        },
+        {
+          "name": "白马",
+          "value": 54
+        },
+        {
+          "name": "白毦",
+          "value": 49
+        },
+        {
+          "name": "大刀",
+          "value": 40
+        },
+        {
+          "name": "长枪",
+          "value": 34
+        },
+        {
+          "name": "陷阵",
+          "value": 32
+        },
+        {
+          "name": "朴刀",
+          "value": 31
+        },
+        {
+          "name": "西凉",
+          "value": 31
+        },
+        {
+          "name": "解烦",
+          "value": 29
+        },
+        {
+          "name": "蛮族",
+          "value": 27
+        },
+        {
+          "name": "弩兵",
+          "value": 26
+        },
+        {
+          "name": "虎豹",
+          "value": 26
+        },
+        {
+          "name": "黄巾",
+          "value": 24
+        },
+        {
+          "name": "尸兵",
+          "value": 9
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "铁锤",
+          "value": 54
+        },
+        {
+          "name": "链锤",
+          "value": 45
+        },
+        {
+          "name": "猛兽",
+          "value": 41
+        },
+        {
+          "name": "战车",
+          "value": 41
+        },
+        {
+          "name": "武斗",
+          "value": 36
+        },
+        {
+          "name": "巫女",
+          "value": 20
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "黄巾",
+      "description": "",
+      "rangeType": "近战",
+      "rangeValue": 1,
+      "infantryRange": 1,
+      "cavalryRange": 1,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -317,
+      "restraint": {
+        "朴刀": -23,
+        "长枪": -24,
+        "大刀": -38,
+        "弓箭": 18,
+        "链锤": 4,
+        "飞刀": 10,
+        "武斗": -3,
+        "蛮族": 30,
+        "铁锤": -27,
+        "藤甲": -24,
+        "黄巾": 0,
+        "弩兵": -13,
+        "女兵": 65,
+        "虎豹": -23,
+        "陷阵": -28,
+        "白马": -37,
+        "无当": -10,
+        "西凉": -29,
+        "白毦": -44,
+        "金甲": -10,
+        "解烦": -24,
+        "猛兽": -9,
+        "战车": -8,
+        "尸兵": -32,
+        "刺客": -8,
+        "巫女": -30
+      },
+      "counters": [
+        {
+          "name": "女兵",
+          "value": 65
+        },
+        {
+          "name": "蛮族",
+          "value": 30
+        },
+        {
+          "name": "弓箭",
+          "value": 18
+        },
+        {
+          "name": "飞刀",
+          "value": 10
+        },
+        {
+          "name": "链锤",
+          "value": 4
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "白毦",
+          "value": 44
+        },
+        {
+          "name": "大刀",
+          "value": 38
+        },
+        {
+          "name": "白马",
+          "value": 37
+        },
+        {
+          "name": "尸兵",
+          "value": 32
+        },
+        {
+          "name": "巫女",
+          "value": 30
+        },
+        {
+          "name": "西凉",
+          "value": 29
+        },
+        {
+          "name": "陷阵",
+          "value": 28
+        },
+        {
+          "name": "铁锤",
+          "value": 27
+        },
+        {
+          "name": "长枪",
+          "value": 24
+        },
+        {
+          "name": "藤甲",
+          "value": 24
+        },
+        {
+          "name": "解烦",
+          "value": 24
+        },
+        {
+          "name": "朴刀",
+          "value": 23
+        },
+        {
+          "name": "虎豹",
+          "value": 23
+        },
+        {
+          "name": "弩兵",
+          "value": 13
+        },
+        {
+          "name": "无当",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        },
+        {
+          "name": "猛兽",
+          "value": 9
+        },
+        {
+          "name": "战车",
+          "value": 8
+        },
+        {
+          "name": "刺客",
+          "value": 8
+        },
+        {
+          "name": "武斗",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "弩兵",
+      "description": "",
+      "rangeType": "远程",
+      "rangeValue": 3,
+      "infantryRange": 35,
+      "cavalryRange": 5,
+      "infantryRangedSpeed": 4,
+      "infantryMeleeSpeed": 3,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 24,
+      "restraint": {
+        "朴刀": 8,
+        "长枪": 35,
+        "大刀": 28,
+        "弓箭": -25,
+        "链锤": 37,
+        "飞刀": -40,
+        "武斗": 13,
+        "蛮族": 10,
+        "铁锤": 33,
+        "藤甲": -26,
+        "黄巾": 13,
+        "弩兵": 0,
+        "女兵": -10,
+        "虎豹": -10,
+        "陷阵": -42,
+        "白马": 55,
+        "无当": -45,
+        "西凉": 55,
+        "白毦": 30,
+        "金甲": -20,
+        "解烦": 23,
+        "猛兽": -8,
+        "战车": -27,
+        "尸兵": -28,
+        "刺客": -45,
+        "巫女": 10
+      },
+      "counters": [
+        {
+          "name": "白马",
+          "value": 55
+        },
+        {
+          "name": "西凉",
+          "value": 55
+        },
+        {
+          "name": "链锤",
+          "value": 37
+        },
+        {
+          "name": "长枪",
+          "value": 35
+        },
+        {
+          "name": "铁锤",
+          "value": 33
+        },
+        {
+          "name": "白毦",
+          "value": 30
+        },
+        {
+          "name": "大刀",
+          "value": 28
+        },
+        {
+          "name": "解烦",
+          "value": 23
+        },
+        {
+          "name": "武斗",
+          "value": 13
+        },
+        {
+          "name": "黄巾",
+          "value": 13
+        },
+        {
+          "name": "蛮族",
+          "value": 10
+        },
+        {
+          "name": "巫女",
+          "value": 10
+        },
+        {
+          "name": "朴刀",
+          "value": 8
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "无当",
+          "value": 45
+        },
+        {
+          "name": "刺客",
+          "value": 45
+        },
+        {
+          "name": "陷阵",
+          "value": 42
+        },
+        {
+          "name": "飞刀",
+          "value": 40
+        },
+        {
+          "name": "尸兵",
+          "value": 28
+        },
+        {
+          "name": "战车",
+          "value": 27
+        },
+        {
+          "name": "藤甲",
+          "value": 26
+        },
+        {
+          "name": "弓箭",
+          "value": 25
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "虎豹",
+          "value": 10
+        },
+        {
+          "name": "猛兽",
+          "value": 8
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "女兵",
+      "description": "",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 15,
+      "cavalryRange": 20,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -213,
+      "restraint": {
+        "朴刀": 10,
+        "长枪": -39,
+        "大刀": 10,
+        "弓箭": -29,
+        "链锤": -32,
+        "飞刀": 10,
+        "武斗": 10,
+        "蛮族": 10,
+        "铁锤": -36,
+        "藤甲": 10,
+        "黄巾": -65,
+        "弩兵": 10,
+        "女兵": 0,
+        "虎豹": 10,
+        "陷阵": 10,
+        "白马": 10,
+        "无当": 10,
+        "西凉": 10,
+        "白毦": 10,
+        "金甲": -20,
+        "解烦": 10,
+        "猛兽": -70,
+        "战车": 10,
+        "尸兵": -72,
+        "刺客": 10,
+        "巫女": -10
+      },
+      "counters": [
+        {
+          "name": "朴刀",
+          "value": 10
+        },
+        {
+          "name": "大刀",
+          "value": 10
+        },
+        {
+          "name": "飞刀",
+          "value": 10
+        },
+        {
+          "name": "武斗",
+          "value": 10
+        },
+        {
+          "name": "蛮族",
+          "value": 10
+        },
+        {
+          "name": "藤甲",
+          "value": 10
+        },
+        {
+          "name": "弩兵",
+          "value": 10
+        },
+        {
+          "name": "虎豹",
+          "value": 10
+        },
+        {
+          "name": "陷阵",
+          "value": 10
+        },
+        {
+          "name": "白马",
+          "value": 10
+        },
+        {
+          "name": "无当",
+          "value": 10
+        },
+        {
+          "name": "西凉",
+          "value": 10
+        },
+        {
+          "name": "白毦",
+          "value": 10
+        },
+        {
+          "name": "解烦",
+          "value": 10
+        },
+        {
+          "name": "战车",
+          "value": 10
+        },
+        {
+          "name": "刺客",
+          "value": 10
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "尸兵",
+          "value": 72
+        },
+        {
+          "name": "猛兽",
+          "value": 70
+        },
+        {
+          "name": "黄巾",
+          "value": 65
+        },
+        {
+          "name": "长枪",
+          "value": 39
+        },
+        {
+          "name": "铁锤",
+          "value": 36
+        },
+        {
+          "name": "链锤",
+          "value": 32
+        },
+        {
+          "name": "弓箭",
+          "value": 29
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "巫女",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "虎豹",
+      "description": "弩兵上位",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 25,
+      "cavalryRange": 15,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -8,
+      "restraint": {
+        "朴刀": -10,
+        "长枪": 30,
+        "大刀": 32,
+        "弓箭": -15,
+        "链锤": 27,
+        "飞刀": -40,
+        "武斗": -23,
+        "蛮族": 20,
+        "铁锤": 33,
+        "藤甲": -26,
+        "黄巾": 23,
+        "弩兵": 10,
+        "女兵": -10,
+        "虎豹": 0,
+        "陷阵": 20,
+        "白马": 23,
+        "无当": -42,
+        "西凉": -20,
+        "白毦": 44,
+        "金甲": -20,
+        "解烦": 18,
+        "猛兽": 26,
+        "战车": -20,
+        "尸兵": -18,
+        "刺客": -55,
+        "巫女": -15
+      },
+      "counters": [
+        {
+          "name": "白毦",
+          "value": 44
+        },
+        {
+          "name": "铁锤",
+          "value": 33
+        },
+        {
+          "name": "大刀",
+          "value": 32
+        },
+        {
+          "name": "长枪",
+          "value": 30
+        },
+        {
+          "name": "链锤",
+          "value": 27
+        },
+        {
+          "name": "猛兽",
+          "value": 26
+        },
+        {
+          "name": "黄巾",
+          "value": 23
+        },
+        {
+          "name": "白马",
+          "value": 23
+        },
+        {
+          "name": "蛮族",
+          "value": 20
+        },
+        {
+          "name": "陷阵",
+          "value": 20
+        },
+        {
+          "name": "解烦",
+          "value": 18
+        },
+        {
+          "name": "弩兵",
+          "value": 10
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "刺客",
+          "value": 55
+        },
+        {
+          "name": "无当",
+          "value": 42
+        },
+        {
+          "name": "飞刀",
+          "value": 40
+        },
+        {
+          "name": "藤甲",
+          "value": 26
+        },
+        {
+          "name": "武斗",
+          "value": 23
+        },
+        {
+          "name": "西凉",
+          "value": 20
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "战车",
+          "value": 20
+        },
+        {
+          "name": "尸兵",
+          "value": 18
+        },
+        {
+          "name": "弓箭",
+          "value": 15
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "朴刀",
+          "value": 10
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "陷阵",
+      "description": "朴刀上位",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 5,
+      "cavalryRange": 10,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 111,
+      "restraint": {
+        "朴刀": 5,
+        "长枪": -38,
+        "大刀": -47,
+        "弓箭": 69,
+        "链锤": -33,
+        "飞刀": 70,
+        "武斗": 26,
+        "蛮族": -36,
+        "铁锤": -49,
+        "藤甲": -32,
+        "黄巾": 28,
+        "弩兵": 42,
+        "女兵": -10,
+        "虎豹": -20,
+        "陷阵": 0,
+        "白马": 61,
+        "无当": 31,
+        "西凉": -43,
+        "白毦": 36,
+        "金甲": -10,
+        "解烦": 38,
+        "猛兽": -21,
+        "战车": -46,
+        "尸兵": 40,
+        "刺客": 65,
+        "巫女": -15
+      },
+      "counters": [
+        {
+          "name": "飞刀",
+          "value": 70
+        },
+        {
+          "name": "弓箭",
+          "value": 69
+        },
+        {
+          "name": "刺客",
+          "value": 65
+        },
+        {
+          "name": "白马",
+          "value": 61
+        },
+        {
+          "name": "弩兵",
+          "value": 42
+        },
+        {
+          "name": "尸兵",
+          "value": 40
+        },
+        {
+          "name": "解烦",
+          "value": 38
+        },
+        {
+          "name": "白毦",
+          "value": 36
+        },
+        {
+          "name": "无当",
+          "value": 31
+        },
+        {
+          "name": "黄巾",
+          "value": 28
+        },
+        {
+          "name": "武斗",
+          "value": 26
+        },
+        {
+          "name": "朴刀",
+          "value": 5
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "铁锤",
+          "value": 49
+        },
+        {
+          "name": "大刀",
+          "value": 47
+        },
+        {
+          "name": "战车",
+          "value": 46
+        },
+        {
+          "name": "西凉",
+          "value": 43
+        },
+        {
+          "name": "长枪",
+          "value": 38
+        },
+        {
+          "name": "蛮族",
+          "value": 36
+        },
+        {
+          "name": "链锤",
+          "value": 33
+        },
+        {
+          "name": "藤甲",
+          "value": 32
+        },
+        {
+          "name": "猛兽",
+          "value": 21
+        },
+        {
+          "name": "虎豹",
+          "value": 20
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "白马",
+      "description": "弓箭上位",
+      "rangeType": "远程",
+      "rangeValue": 3,
+      "infantryRange": 50,
+      "cavalryRange": 99,
+      "infantryRangedSpeed": 4,
+      "infantryMeleeSpeed": 3,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 2,
+      "totalRestraint": -123,
+      "restraint": {
+        "朴刀": -41,
+        "长枪": 49,
+        "大刀": 52,
+        "弓箭": 10,
+        "链锤": 45,
+        "飞刀": 13,
+        "武斗": -59,
+        "蛮族": 26,
+        "铁锤": 50,
+        "藤甲": -54,
+        "黄巾": 37,
+        "弩兵": -55,
+        "女兵": -10,
+        "虎豹": -23,
+        "陷阵": -61,
+        "白马": 0,
+        "无当": -9,
+        "西凉": 44,
+        "白毦": -29,
+        "金甲": -20,
+        "解烦": -44,
+        "猛兽": -24,
+        "战车": -23,
+        "尸兵": -25,
+        "刺客": 8,
+        "巫女": 20
+      },
+      "counters": [
+        {
+          "name": "大刀",
+          "value": 52
+        },
+        {
+          "name": "铁锤",
+          "value": 50
+        },
+        {
+          "name": "长枪",
+          "value": 49
+        },
+        {
+          "name": "链锤",
+          "value": 45
+        },
+        {
+          "name": "西凉",
+          "value": 44
+        },
+        {
+          "name": "黄巾",
+          "value": 37
+        },
+        {
+          "name": "蛮族",
+          "value": 26
+        },
+        {
+          "name": "巫女",
+          "value": 20
+        },
+        {
+          "name": "飞刀",
+          "value": 13
+        },
+        {
+          "name": "弓箭",
+          "value": 10
+        },
+        {
+          "name": "刺客",
+          "value": 8
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "陷阵",
+          "value": 61
+        },
+        {
+          "name": "武斗",
+          "value": 59
+        },
+        {
+          "name": "弩兵",
+          "value": 55
+        },
+        {
+          "name": "藤甲",
+          "value": 54
+        },
+        {
+          "name": "解烦",
+          "value": 44
+        },
+        {
+          "name": "朴刀",
+          "value": 41
+        },
+        {
+          "name": "白毦",
+          "value": 29
+        },
+        {
+          "name": "尸兵",
+          "value": 25
+        },
+        {
+          "name": "猛兽",
+          "value": 24
+        },
+        {
+          "name": "虎豹",
+          "value": 23
+        },
+        {
+          "name": "战车",
+          "value": 23
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "无当",
+          "value": 9
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "无当",
+      "description": "飞刀上位，略强刺客",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 15,
+      "cavalryRange": 25,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 103,
+      "restraint": {
+        "朴刀": -57,
+        "长枪": 36,
+        "大刀": 35,
+        "弓箭": -3,
+        "链锤": 30,
+        "飞刀": 5,
+        "武斗": -55,
+        "蛮族": -58,
+        "铁锤": 33,
+        "藤甲": -67,
+        "黄巾": 10,
+        "弩兵": 45,
+        "女兵": -10,
+        "虎豹": 42,
+        "陷阵": -31,
+        "白马": 9,
+        "无当": 0,
+        "西凉": 25,
+        "白毦": 35,
+        "金甲": -20,
+        "解烦": 10,
+        "猛兽": 36,
+        "战车": 15,
+        "尸兵": 28,
+        "刺客": 25,
+        "巫女": -15
+      },
+      "counters": [
+        {
+          "name": "弩兵",
+          "value": 45
+        },
+        {
+          "name": "虎豹",
+          "value": 42
+        },
+        {
+          "name": "长枪",
+          "value": 36
+        },
+        {
+          "name": "猛兽",
+          "value": 36
+        },
+        {
+          "name": "大刀",
+          "value": 35
+        },
+        {
+          "name": "白毦",
+          "value": 35
+        },
+        {
+          "name": "铁锤",
+          "value": 33
+        },
+        {
+          "name": "链锤",
+          "value": 30
+        },
+        {
+          "name": "尸兵",
+          "value": 28
+        },
+        {
+          "name": "西凉",
+          "value": 25
+        },
+        {
+          "name": "刺客",
+          "value": 25
+        },
+        {
+          "name": "战车",
+          "value": 15
+        },
+        {
+          "name": "黄巾",
+          "value": 10
+        },
+        {
+          "name": "解烦",
+          "value": 10
+        },
+        {
+          "name": "白马",
+          "value": 9
+        },
+        {
+          "name": "飞刀",
+          "value": 5
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "藤甲",
+          "value": 67
+        },
+        {
+          "name": "蛮族",
+          "value": 58
+        },
+        {
+          "name": "朴刀",
+          "value": 57
+        },
+        {
+          "name": "武斗",
+          "value": 55
+        },
+        {
+          "name": "陷阵",
+          "value": 31
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "弓箭",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "西凉",
+      "description": "大刀上位",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 1,
+      "cavalryRange": 15,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 14,
+      "restraint": {
+        "朴刀": 50,
+        "长枪": 26,
+        "大刀": 23,
+        "弓箭": -24,
+        "链锤": 14,
+        "飞刀": -41,
+        "武斗": 51,
+        "蛮族": 56,
+        "铁锤": 12,
+        "藤甲": -31,
+        "黄巾": 29,
+        "弩兵": -55,
+        "女兵": -10,
+        "虎豹": 20,
+        "陷阵": 43,
+        "白马": -44,
+        "无当": -25,
+        "西凉": 0,
+        "白毦": -20,
+        "金甲": -10,
+        "解烦": 49,
+        "猛兽": -11,
+        "战车": -12,
+        "尸兵": -33,
+        "刺客": -18,
+        "巫女": -25
+      },
+      "counters": [
+        {
+          "name": "蛮族",
+          "value": 56
+        },
+        {
+          "name": "武斗",
+          "value": 51
+        },
+        {
+          "name": "朴刀",
+          "value": 50
+        },
+        {
+          "name": "解烦",
+          "value": 49
+        },
+        {
+          "name": "陷阵",
+          "value": 43
+        },
+        {
+          "name": "黄巾",
+          "value": 29
+        },
+        {
+          "name": "长枪",
+          "value": 26
+        },
+        {
+          "name": "大刀",
+          "value": 23
+        },
+        {
+          "name": "虎豹",
+          "value": 20
+        },
+        {
+          "name": "链锤",
+          "value": 14
+        },
+        {
+          "name": "铁锤",
+          "value": 12
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "弩兵",
+          "value": 55
+        },
+        {
+          "name": "白马",
+          "value": 44
+        },
+        {
+          "name": "飞刀",
+          "value": 41
+        },
+        {
+          "name": "尸兵",
+          "value": 33
+        },
+        {
+          "name": "藤甲",
+          "value": 31
+        },
+        {
+          "name": "无当",
+          "value": 25
+        },
+        {
+          "name": "巫女",
+          "value": 25
+        },
+        {
+          "name": "弓箭",
+          "value": 24
+        },
+        {
+          "name": "白毦",
+          "value": 20
+        },
+        {
+          "name": "刺客",
+          "value": 18
+        },
+        {
+          "name": "战车",
+          "value": 12
+        },
+        {
+          "name": "猛兽",
+          "value": 11
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "name": "白毦",
+      "description": "长枪上位",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 1,
+      "cavalryRange": 5,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -232,
+      "restraint": {
+        "朴刀": 53,
+        "长枪": 15,
+        "大刀": -11,
+        "弓箭": -29,
+        "链锤": -16,
+        "飞刀": -26,
+        "武斗": 55,
+        "蛮族": -46,
+        "铁锤": -43,
+        "藤甲": -49,
+        "黄巾": 44,
+        "弩兵": -30,
+        "女兵": -10,
+        "虎豹": -44,
+        "陷阵": -36,
+        "白马": 29,
+        "无当": -35,
+        "西凉": 20,
+        "白毦": 0,
+        "金甲": 45,
+        "解烦": -66,
+        "猛兽": -20,
+        "战车": -24,
+        "尸兵": 38,
+        "刺客": -31,
+        "巫女": -15
+      },
+      "counters": [
+        {
+          "name": "武斗",
+          "value": 55
+        },
+        {
+          "name": "朴刀",
+          "value": 53
+        },
+        {
+          "name": "金甲",
+          "value": 45
+        },
+        {
+          "name": "黄巾",
+          "value": 44
+        },
+        {
+          "name": "尸兵",
+          "value": 38
+        },
+        {
+          "name": "白马",
+          "value": 29
+        },
+        {
+          "name": "西凉",
+          "value": 20
+        },
+        {
+          "name": "长枪",
+          "value": 15
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "解烦",
+          "value": 66
+        },
+        {
+          "name": "藤甲",
+          "value": 49
+        },
+        {
+          "name": "蛮族",
+          "value": 46
+        },
+        {
+          "name": "虎豹",
+          "value": 44
+        },
+        {
+          "name": "铁锤",
+          "value": 43
+        },
+        {
+          "name": "陷阵",
+          "value": 36
+        },
+        {
+          "name": "无当",
+          "value": 35
+        },
+        {
+          "name": "刺客",
+          "value": 31
+        },
+        {
+          "name": "弩兵",
+          "value": 30
+        },
+        {
+          "name": "弓箭",
+          "value": 29
+        },
+        {
+          "name": "飞刀",
+          "value": 26
+        },
+        {
+          "name": "战车",
+          "value": 24
+        },
+        {
+          "name": "猛兽",
+          "value": 20
+        },
+        {
+          "name": "链锤",
+          "value": 16
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "大刀",
+          "value": 11
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "金甲",
+      "description": "万金油近战兵",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 1,
+      "cavalryRange": 15,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 240,
+      "restraint": {
+        "朴刀": 10,
+        "长枪": 10,
+        "大刀": 10,
+        "弓箭": 20,
+        "链锤": 20,
+        "飞刀": 20,
+        "武斗": 10,
+        "蛮族": 10,
+        "铁锤": 10,
+        "藤甲": 10,
+        "黄巾": 10,
+        "弩兵": 20,
+        "女兵": 20,
+        "虎豹": 20,
+        "陷阵": 10,
+        "白马": 20,
+        "无当": 20,
+        "西凉": 10,
+        "白毦": -45,
+        "金甲": 0,
+        "解烦": 10,
+        "猛兽": 10,
+        "战车": 20,
+        "尸兵": -10,
+        "刺客": 20,
+        "巫女": -25
+      },
+      "counters": [
+        {
+          "name": "弓箭",
+          "value": 20
+        },
+        {
+          "name": "链锤",
+          "value": 20
+        },
+        {
+          "name": "飞刀",
+          "value": 20
+        },
+        {
+          "name": "弩兵",
+          "value": 20
+        },
+        {
+          "name": "女兵",
+          "value": 20
+        },
+        {
+          "name": "虎豹",
+          "value": 20
+        },
+        {
+          "name": "白马",
+          "value": 20
+        },
+        {
+          "name": "无当",
+          "value": 20
+        },
+        {
+          "name": "战车",
+          "value": 20
+        },
+        {
+          "name": "刺客",
+          "value": 20
+        },
+        {
+          "name": "朴刀",
+          "value": 10
+        },
+        {
+          "name": "长枪",
+          "value": 10
+        },
+        {
+          "name": "大刀",
+          "value": 10
+        },
+        {
+          "name": "武斗",
+          "value": 10
+        },
+        {
+          "name": "蛮族",
+          "value": 10
+        },
+        {
+          "name": "铁锤",
+          "value": 10
+        },
+        {
+          "name": "藤甲",
+          "value": 10
+        },
+        {
+          "name": "黄巾",
+          "value": 10
+        },
+        {
+          "name": "陷阵",
+          "value": 10
+        },
+        {
+          "name": "西凉",
+          "value": 10
+        },
+        {
+          "name": "解烦",
+          "value": 10
+        },
+        {
+          "name": "猛兽",
+          "value": 10
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "白毦",
+          "value": 45
+        },
+        {
+          "name": "巫女",
+          "value": 25
+        },
+        {
+          "name": "尸兵",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "name": "解烦",
+      "description": "朴刀上位",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 1,
+      "cavalryRange": 5,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": -40,
+      "restraint": {
+        "朴刀": 12,
+        "长枪": -19,
+        "大刀": -33,
+        "弓箭": 59,
+        "链锤": -23,
+        "飞刀": 55,
+        "武斗": 27,
+        "蛮族": 24,
+        "铁锤": -22,
+        "藤甲": -29,
+        "黄巾": 24,
+        "弩兵": -23,
+        "女兵": -10,
+        "虎豹": -18,
+        "陷阵": -38,
+        "白马": 44,
+        "无当": -10,
+        "西凉": -49,
+        "白毦": 66,
+        "金甲": -10,
+        "解烦": 0,
+        "猛兽": 24,
+        "战车": -15,
+        "尸兵": -25,
+        "刺客": -36,
+        "巫女": -15
+      },
+      "counters": [
+        {
+          "name": "白毦",
+          "value": 66
+        },
+        {
+          "name": "弓箭",
+          "value": 59
+        },
+        {
+          "name": "飞刀",
+          "value": 55
+        },
+        {
+          "name": "白马",
+          "value": 44
+        },
+        {
+          "name": "武斗",
+          "value": 27
+        },
+        {
+          "name": "蛮族",
+          "value": 24
+        },
+        {
+          "name": "黄巾",
+          "value": 24
+        },
+        {
+          "name": "猛兽",
+          "value": 24
+        },
+        {
+          "name": "朴刀",
+          "value": 12
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "西凉",
+          "value": 49
+        },
+        {
+          "name": "陷阵",
+          "value": 38
+        },
+        {
+          "name": "刺客",
+          "value": 36
+        },
+        {
+          "name": "大刀",
+          "value": 33
+        },
+        {
+          "name": "藤甲",
+          "value": 29
+        },
+        {
+          "name": "尸兵",
+          "value": 25
+        },
+        {
+          "name": "链锤",
+          "value": 23
+        },
+        {
+          "name": "弩兵",
+          "value": 23
+        },
+        {
+          "name": "铁锤",
+          "value": 22
+        },
+        {
+          "name": "长枪",
+          "value": 19
+        },
+        {
+          "name": "虎豹",
+          "value": 18
+        },
+        {
+          "name": "战车",
+          "value": 15
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "无当",
+          "value": 10
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "name": "猛兽",
+      "description": "混合克制，近战版链锤",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 1,
+      "cavalryRange": 5,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 255,
+      "restraint": {
+        "朴刀": 46,
+        "长枪": -25,
+        "大刀": -31,
+        "弓箭": 69,
+        "链锤": -36,
+        "飞刀": 27,
+        "武斗": 15,
+        "蛮族": -23,
+        "铁锤": -42,
+        "藤甲": 41,
+        "黄巾": 9,
+        "弩兵": 8,
+        "女兵": 70,
+        "虎豹": -26,
+        "陷阵": 21,
+        "白马": 24,
+        "无当": -36,
+        "西凉": 11,
+        "白毦": 20,
+        "金甲": -10,
+        "解烦": -24,
+        "猛兽": 0,
+        "战车": 43,
+        "尸兵": 47,
+        "刺客": 12,
+        "巫女": 45
+      },
+      "counters": [
+        {
+          "name": "女兵",
+          "value": 70
+        },
+        {
+          "name": "弓箭",
+          "value": 69
+        },
+        {
+          "name": "尸兵",
+          "value": 47
+        },
+        {
+          "name": "朴刀",
+          "value": 46
+        },
+        {
+          "name": "巫女",
+          "value": 45
+        },
+        {
+          "name": "战车",
+          "value": 43
+        },
+        {
+          "name": "藤甲",
+          "value": 41
+        },
+        {
+          "name": "飞刀",
+          "value": 27
+        },
+        {
+          "name": "白马",
+          "value": 24
+        },
+        {
+          "name": "陷阵",
+          "value": 21
+        },
+        {
+          "name": "白毦",
+          "value": 20
+        },
+        {
+          "name": "武斗",
+          "value": 15
+        },
+        {
+          "name": "刺客",
+          "value": 12
+        },
+        {
+          "name": "西凉",
+          "value": 11
+        },
+        {
+          "name": "黄巾",
+          "value": 9
+        },
+        {
+          "name": "弩兵",
+          "value": 8
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "铁锤",
+          "value": 42
+        },
+        {
+          "name": "链锤",
+          "value": 36
+        },
+        {
+          "name": "无当",
+          "value": 36
+        },
+        {
+          "name": "大刀",
+          "value": 31
+        },
+        {
+          "name": "虎豹",
+          "value": 26
+        },
+        {
+          "name": "长枪",
+          "value": 25
+        },
+        {
+          "name": "解烦",
+          "value": 24
+        },
+        {
+          "name": "蛮族",
+          "value": 23
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "name": "战车",
+      "description": "混合克制，类似链锤",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 10,
+      "cavalryRange": 25,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 260,
+      "restraint": {
+        "朴刀": 35,
+        "长枪": 31,
+        "大刀": -42,
+        "弓箭": 31,
+        "链锤": -45,
+        "飞刀": 25,
+        "武斗": 16,
+        "蛮族": 38,
+        "铁锤": -58,
+        "藤甲": 41,
+        "黄巾": 8,
+        "弩兵": 27,
+        "女兵": -10,
+        "虎豹": 20,
+        "陷阵": 46,
+        "白马": 23,
+        "无当": -15,
+        "西凉": 12,
+        "白毦": 24,
+        "金甲": -20,
+        "解烦": 15,
+        "猛兽": -43,
+        "战车": 0,
+        "尸兵": 43,
+        "刺客": 20,
+        "巫女": 38
+      },
+      "counters": [
+        {
+          "name": "陷阵",
+          "value": 46
+        },
+        {
+          "name": "尸兵",
+          "value": 43
+        },
+        {
+          "name": "藤甲",
+          "value": 41
+        },
+        {
+          "name": "蛮族",
+          "value": 38
+        },
+        {
+          "name": "巫女",
+          "value": 38
+        },
+        {
+          "name": "朴刀",
+          "value": 35
+        },
+        {
+          "name": "长枪",
+          "value": 31
+        },
+        {
+          "name": "弓箭",
+          "value": 31
+        },
+        {
+          "name": "弩兵",
+          "value": 27
+        },
+        {
+          "name": "飞刀",
+          "value": 25
+        },
+        {
+          "name": "白毦",
+          "value": 24
+        },
+        {
+          "name": "白马",
+          "value": 23
+        },
+        {
+          "name": "虎豹",
+          "value": 20
+        },
+        {
+          "name": "刺客",
+          "value": 20
+        },
+        {
+          "name": "武斗",
+          "value": 16
+        },
+        {
+          "name": "解烦",
+          "value": 15
+        },
+        {
+          "name": "西凉",
+          "value": 12
+        },
+        {
+          "name": "黄巾",
+          "value": 8
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "铁锤",
+          "value": 58
+        },
+        {
+          "name": "链锤",
+          "value": 45
+        },
+        {
+          "name": "猛兽",
+          "value": 43
+        },
+        {
+          "name": "大刀",
+          "value": 42
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "无当",
+          "value": 15
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "name": "尸兵",
+      "description": "混合克制，近战版链锤变体",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 10,
+      "cavalryRange": 10,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 53,
+      "restraint": {
+        "朴刀": 49,
+        "长枪": 38,
+        "大刀": 41,
+        "弓箭": 20,
+        "链锤": -26,
+        "飞刀": -23,
+        "武斗": -36,
+        "蛮族": 46,
+        "铁锤": -25,
+        "藤甲": -9,
+        "黄巾": 32,
+        "弩兵": 28,
+        "女兵": 72,
+        "虎豹": 18,
+        "陷阵": -40,
+        "白马": 25,
+        "无当": -28,
+        "西凉": 33,
+        "白毦": -38,
+        "金甲": 10,
+        "解烦": 25,
+        "猛兽": -47,
+        "战车": -43,
+        "尸兵": 0,
+        "刺客": -27,
+        "巫女": -42
+      },
+      "counters": [
+        {
+          "name": "女兵",
+          "value": 72
+        },
+        {
+          "name": "朴刀",
+          "value": 49
+        },
+        {
+          "name": "蛮族",
+          "value": 46
+        },
+        {
+          "name": "大刀",
+          "value": 41
+        },
+        {
+          "name": "长枪",
+          "value": 38
+        },
+        {
+          "name": "西凉",
+          "value": 33
+        },
+        {
+          "name": "黄巾",
+          "value": 32
+        },
+        {
+          "name": "弩兵",
+          "value": 28
+        },
+        {
+          "name": "白马",
+          "value": 25
+        },
+        {
+          "name": "解烦",
+          "value": 25
+        },
+        {
+          "name": "弓箭",
+          "value": 20
+        },
+        {
+          "name": "虎豹",
+          "value": 18
+        },
+        {
+          "name": "金甲",
+          "value": 10
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "猛兽",
+          "value": 47
+        },
+        {
+          "name": "战车",
+          "value": 43
+        },
+        {
+          "name": "巫女",
+          "value": 42
+        },
+        {
+          "name": "陷阵",
+          "value": 40
+        },
+        {
+          "name": "白毦",
+          "value": 38
+        },
+        {
+          "name": "武斗",
+          "value": 36
+        },
+        {
+          "name": "无当",
+          "value": 28
+        },
+        {
+          "name": "刺客",
+          "value": 27
+        },
+        {
+          "name": "链锤",
+          "value": 26
+        },
+        {
+          "name": "铁锤",
+          "value": 25
+        },
+        {
+          "name": "飞刀",
+          "value": 23
+        },
+        {
+          "name": "藤甲",
+          "value": 9
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "name": "刺客",
+      "description": "飞刀上位",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 15,
+      "cavalryRange": 25,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 19,
+      "restraint": {
+        "朴刀": -60,
+        "长枪": 36,
+        "大刀": 35,
+        "弓箭": -38,
+        "链锤": 28,
+        "飞刀": -30,
+        "武斗": -10,
+        "蛮族": 17,
+        "铁锤": 33,
+        "藤甲": -67,
+        "黄巾": 8,
+        "弩兵": 45,
+        "女兵": -10,
+        "虎豹": 55,
+        "陷阵": -65,
+        "白马": -8,
+        "无当": -25,
+        "西凉": 18,
+        "白毦": 31,
+        "金甲": -20,
+        "解烦": 36,
+        "猛兽": -12,
+        "战车": -20,
+        "尸兵": 27,
+        "刺客": 0,
+        "巫女": 15
+      },
+      "counters": [
+        {
+          "name": "虎豹",
+          "value": 55
+        },
+        {
+          "name": "弩兵",
+          "value": 45
+        },
+        {
+          "name": "长枪",
+          "value": 36
+        },
+        {
+          "name": "解烦",
+          "value": 36
+        },
+        {
+          "name": "大刀",
+          "value": 35
+        },
+        {
+          "name": "铁锤",
+          "value": 33
+        },
+        {
+          "name": "白毦",
+          "value": 31
+        },
+        {
+          "name": "链锤",
+          "value": 28
+        },
+        {
+          "name": "尸兵",
+          "value": 27
+        },
+        {
+          "name": "西凉",
+          "value": 18
+        },
+        {
+          "name": "蛮族",
+          "value": 17
+        },
+        {
+          "name": "巫女",
+          "value": 15
+        },
+        {
+          "name": "黄巾",
+          "value": 8
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "藤甲",
+          "value": 67
+        },
+        {
+          "name": "陷阵",
+          "value": 65
+        },
+        {
+          "name": "朴刀",
+          "value": 60
+        },
+        {
+          "name": "弓箭",
+          "value": 38
+        },
+        {
+          "name": "飞刀",
+          "value": 30
+        },
+        {
+          "name": "无当",
+          "value": 25
+        },
+        {
+          "name": "金甲",
+          "value": 20
+        },
+        {
+          "name": "战车",
+          "value": 20
+        },
+        {
+          "name": "猛兽",
+          "value": 12
+        },
+        {
+          "name": "武斗",
+          "value": 10
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        },
+        {
+          "name": "白马",
+          "value": 8
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "name": "巫女",
+      "description": "万金油远程兵",
+      "rangeType": "半远程",
+      "rangeValue": 2,
+      "infantryRange": 15,
+      "cavalryRange": 20,
+      "infantryRangedSpeed": 2,
+      "infantryMeleeSpeed": 1,
+      "cavalryRangedSpeed": 2,
+      "cavalryMeleeSpeed": 1,
+      "totalRestraint": 13,
+      "restraint": {
+        "朴刀": 15,
+        "长枪": 15,
+        "大刀": 15,
+        "弓箭": -15,
+        "链锤": -30,
+        "飞刀": -15,
+        "武斗": -41,
+        "蛮族": 25,
+        "铁锤": -55,
+        "藤甲": 20,
+        "黄巾": 30,
+        "弩兵": -10,
+        "女兵": 10,
+        "虎豹": 15,
+        "陷阵": 15,
+        "白马": -20,
+        "无当": 15,
+        "西凉": 25,
+        "白毦": 15,
+        "金甲": 25,
+        "解烦": 15,
+        "猛兽": -45,
+        "战车": -38,
+        "尸兵": 42,
+        "刺客": -15,
+        "巫女": 0
+      },
+      "counters": [
+        {
+          "name": "尸兵",
+          "value": 42
+        },
+        {
+          "name": "黄巾",
+          "value": 30
+        },
+        {
+          "name": "蛮族",
+          "value": 25
+        },
+        {
+          "name": "西凉",
+          "value": 25
+        },
+        {
+          "name": "金甲",
+          "value": 25
+        },
+        {
+          "name": "藤甲",
+          "value": 20
+        },
+        {
+          "name": "朴刀",
+          "value": 15
+        },
+        {
+          "name": "长枪",
+          "value": 15
+        },
+        {
+          "name": "大刀",
+          "value": 15
+        },
+        {
+          "name": "虎豹",
+          "value": 15
+        },
+        {
+          "name": "陷阵",
+          "value": 15
+        },
+        {
+          "name": "无当",
+          "value": 15
+        },
+        {
+          "name": "白毦",
+          "value": 15
+        },
+        {
+          "name": "解烦",
+          "value": 15
+        },
+        {
+          "name": "女兵",
+          "value": 10
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "铁锤",
+          "value": 55
+        },
+        {
+          "name": "猛兽",
+          "value": 45
+        },
+        {
+          "name": "武斗",
+          "value": 41
+        },
+        {
+          "name": "战车",
+          "value": 38
+        },
+        {
+          "name": "链锤",
+          "value": 30
+        },
+        {
+          "name": "白马",
+          "value": 20
+        },
+        {
+          "name": "弓箭",
+          "value": 15
+        },
+        {
+          "name": "飞刀",
+          "value": 15
+        },
+        {
+          "name": "刺客",
+          "value": 15
+        },
+        {
+          "name": "弩兵",
+          "value": 10
+        }
+      ]
+    }
+  ],
+  "formations": [
+    {
+      "id": 0,
+      "name": "方",
+      "restraint": {
+        "方": 0,
+        "圆": -11,
+        "锥": -21,
+        "雁": 30,
+        "玄": 18,
+        "鱼": -3,
+        "钩": 23,
+        "冲": -29,
+        "箭": -18
+      },
+      "counters": [
+        {
+          "name": "雁",
+          "value": 30
+        },
+        {
+          "name": "钩",
+          "value": 23
+        },
+        {
+          "name": "玄",
+          "value": 18
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "冲",
+          "value": 29
+        },
+        {
+          "name": "锥",
+          "value": 21
+        },
+        {
+          "name": "箭",
+          "value": 18
+        },
+        {
+          "name": "圆",
+          "value": 11
+        },
+        {
+          "name": "鱼",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "name": "圆",
+      "restraint": {
+        "方": 11,
+        "圆": 0,
+        "锥": -15,
+        "雁": 24,
+        "玄": 29,
+        "鱼": 9,
+        "钩": 23,
+        "冲": -24,
+        "箭": -30
+      },
+      "counters": [
+        {
+          "name": "玄",
+          "value": 29
+        },
+        {
+          "name": "雁",
+          "value": 24
+        },
+        {
+          "name": "钩",
+          "value": 23
+        },
+        {
+          "name": "方",
+          "value": 11
+        },
+        {
+          "name": "鱼",
+          "value": 9
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "箭",
+          "value": 30
+        },
+        {
+          "name": "冲",
+          "value": 24
+        },
+        {
+          "name": "锥",
+          "value": 15
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "锥",
+      "restraint": {
+        "方": 21,
+        "圆": 15,
+        "锥": 0,
+        "雁": -20,
+        "玄": -17,
+        "鱼": 27,
+        "钩": -29,
+        "冲": -11,
+        "箭": 3
+      },
+      "counters": [
+        {
+          "name": "鱼",
+          "value": 27
+        },
+        {
+          "name": "方",
+          "value": 21
+        },
+        {
+          "name": "圆",
+          "value": 15
+        },
+        {
+          "name": "箭",
+          "value": 3
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "钩",
+          "value": 29
+        },
+        {
+          "name": "雁",
+          "value": 20
+        },
+        {
+          "name": "玄",
+          "value": 17
+        },
+        {
+          "name": "冲",
+          "value": 11
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "雁",
+      "restraint": {
+        "方": -30,
+        "圆": -24,
+        "锥": 20,
+        "雁": 0,
+        "玄": -3,
+        "鱼": -15,
+        "钩": -9,
+        "冲": 17,
+        "箭": 29
+      },
+      "counters": [
+        {
+          "name": "箭",
+          "value": 29
+        },
+        {
+          "name": "锥",
+          "value": 20
+        },
+        {
+          "name": "冲",
+          "value": 17
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "方",
+          "value": 30
+        },
+        {
+          "name": "圆",
+          "value": 24
+        },
+        {
+          "name": "鱼",
+          "value": 15
+        },
+        {
+          "name": "钩",
+          "value": 9
+        },
+        {
+          "name": "玄",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "玄",
+      "restraint": {
+        "方": -18,
+        "圆": -29,
+        "锥": 17,
+        "雁": 3,
+        "玄": 0,
+        "鱼": -20,
+        "钩": -11,
+        "冲": 30,
+        "箭": 23
+      },
+      "counters": [
+        {
+          "name": "冲",
+          "value": 30
+        },
+        {
+          "name": "箭",
+          "value": 23
+        },
+        {
+          "name": "锥",
+          "value": 17
+        },
+        {
+          "name": "雁",
+          "value": 3
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "圆",
+          "value": 29
+        },
+        {
+          "name": "鱼",
+          "value": 20
+        },
+        {
+          "name": "方",
+          "value": 18
+        },
+        {
+          "name": "钩",
+          "value": 11
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "鱼",
+      "restraint": {
+        "方": 3,
+        "圆": -9,
+        "锥": -27,
+        "雁": 15,
+        "玄": 20,
+        "鱼": 0,
+        "钩": 27,
+        "冲": -21,
+        "箭": -17
+      },
+      "counters": [
+        {
+          "name": "钩",
+          "value": 27
+        },
+        {
+          "name": "玄",
+          "value": 20
+        },
+        {
+          "name": "雁",
+          "value": 15
+        },
+        {
+          "name": "方",
+          "value": 3
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "锥",
+          "value": 27
+        },
+        {
+          "name": "冲",
+          "value": 21
+        },
+        {
+          "name": "箭",
+          "value": 17
+        },
+        {
+          "name": "圆",
+          "value": 9
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "钩",
+      "restraint": {
+        "方": -23,
+        "圆": -23,
+        "锥": 29,
+        "雁": 9,
+        "玄": 11,
+        "鱼": -27,
+        "钩": 0,
+        "冲": 21,
+        "箭": 24
+      },
+      "counters": [
+        {
+          "name": "锥",
+          "value": 29
+        },
+        {
+          "name": "箭",
+          "value": 24
+        },
+        {
+          "name": "冲",
+          "value": 21
+        },
+        {
+          "name": "玄",
+          "value": 11
+        },
+        {
+          "name": "雁",
+          "value": 9
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "鱼",
+          "value": 27
+        },
+        {
+          "name": "方",
+          "value": 23
+        },
+        {
+          "name": "圆",
+          "value": 23
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "冲",
+      "restraint": {
+        "方": 29,
+        "圆": 24,
+        "锥": 11,
+        "雁": -17,
+        "玄": -30,
+        "鱼": 21,
+        "钩": -21,
+        "冲": 0,
+        "箭": 12
+      },
+      "counters": [
+        {
+          "name": "方",
+          "value": 29
+        },
+        {
+          "name": "圆",
+          "value": 24
+        },
+        {
+          "name": "鱼",
+          "value": 21
+        },
+        {
+          "name": "箭",
+          "value": 12
+        },
+        {
+          "name": "锥",
+          "value": 11
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "玄",
+          "value": 30
+        },
+        {
+          "name": "钩",
+          "value": 21
+        },
+        {
+          "name": "雁",
+          "value": 17
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "箭",
+      "restraint": {
+        "方": 18,
+        "圆": 30,
+        "锥": -3,
+        "雁": -29,
+        "玄": -23,
+        "鱼": 17,
+        "钩": -24,
+        "冲": -12,
+        "箭": 0
+      },
+      "counters": [
+        {
+          "name": "圆",
+          "value": 30
+        },
+        {
+          "name": "方",
+          "value": 18
+        },
+        {
+          "name": "鱼",
+          "value": 17
+        }
+      ],
+      "counteredBy": [
+        {
+          "name": "雁",
+          "value": 29
+        },
+        {
+          "name": "钩",
+          "value": 24
+        },
+        {
+          "name": "玄",
+          "value": 23
+        },
+        {
+          "name": "冲",
+          "value": 12
+        },
+        {
+          "name": "锥",
+          "value": 3
+        }
+      ]
+    }
+  ]
+}

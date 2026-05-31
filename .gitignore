@@ -1,0 +1,48 @@
+# Built artifacts
+bin
+gen
+out
+build/
+.gradle/
+.navigation/
+captures/
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Android Studio
+*.jks
+*.keystore
+local.properties
+.externalNativeBuild
+.cxx/
+cmake_install.cmake
+CMakeCache.txt
+CMakeFiles/
+Makefile
+rules.ninja
+.attach_pid*
+
+# Google Services
+# google-services.json
+
+# Logs
+*.log
+
+# OS related
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
