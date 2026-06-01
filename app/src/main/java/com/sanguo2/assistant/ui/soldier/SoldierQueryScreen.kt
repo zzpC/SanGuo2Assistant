@@ -44,7 +44,7 @@ fun SoldierQueryScreen(
     
     // Categorized selection state
     val originalSoldiers = listOf("朴刀", "长枪", "大刀", "弓箭", "链锤", "飞刀", "武斗", "蛮族", "铁锤", "藤甲", "黄巾", "弩兵", "女兵")
-    val newSoldiers = listOf("刺客", "无当", "白马", "虎豹", "白毦", "西凉", "尸兵", "猛兽", "战车", "巫女", "解烦", "金甲", "陷阵")
+    val newSoldiers = listOf("虎豹", "陷阵", "白马", "无当", "西凉", "白毦", "金甲", "解烦", "猛兽", "战车", "尸兵", "刺客", "巫女")
     var selectedCategory by remember { mutableStateOf<String?>(null) }
 
     var selectedSoldier by remember { mutableStateOf<Soldier?>(null) }

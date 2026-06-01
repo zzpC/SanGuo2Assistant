@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.Checkroom
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,6 +25,138 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sanguo2.assistant.data.model.FormationRecommendation
 import com.sanguo2.assistant.data.model.FormationRecommendResult
 import com.sanguo2.assistant.ui.theme.*
+
+private val FORMATION_MATRICES: Map<String, List<List<Int>>> = mapOf(
+    "方" to listOf(
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0),
+        listOf(0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0),
+        listOf(0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ),
+    "圆" to listOf(
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0),
+        listOf(0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0),
+        listOf(0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0),
+        listOf(0, 0, 2, 0, 0, 9, 0, 0, 2, 0, 0),
+        listOf(0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0),
+        listOf(0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0),
+        listOf(0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ),
+    "锥" to listOf(
+        listOf(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
+        listOf(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0),
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0),
+        listOf(0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ),
+    "雁" to listOf(
+        listOf(0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0),
+        listOf(0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0),
+        listOf(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0),
+        listOf(0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0),
+        listOf(0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ),
+    "玄" to listOf(
+        listOf(0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(1, 1, 1, 0, 2, 2, 2, 0, 1, 1, 1),
+        listOf(1, 1, 1, 0, 2, 9, 2, 0, 1, 1, 1),
+        listOf(1, 1, 1, 0, 2, 2, 2, 0, 1, 1, 1),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2),
+        listOf(2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2),
+        listOf(2, 2, 2, 0, 2, 2, 2, 0, 2, 2, 2),
+    ),
+    "鱼" to listOf(
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0),
+        listOf(0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ),
+    "钩" to listOf(
+        listOf(0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0),
+        listOf(0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0),
+        listOf(0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0),
+        listOf(0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0),
+        listOf(0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ),
+    "冲" to listOf(
+        listOf(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+        listOf(0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0),
+        listOf(0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0),
+        listOf(0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0),
+        listOf(0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0),
+        listOf(0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ),
+    "箭" to listOf(
+        listOf(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0),
+        listOf(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0),
+        listOf(0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+        listOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+    ),
+)
+
+private val FORMATION_FULL_NAMES = mapOf(
+    "方" to "方形之阵",
+    "圆" to "圆形之阵",
+    "锥" to "锥形之阵",
+    "雁" to "雁型之阵",
+    "玄" to "玄襄之阵",
+    "鱼" to "鱼丽之阵",
+    "钩" to "钩型之阵",
+    "冲" to "冲锋之阵",
+    "箭" to "箭矢之阵",
+)
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -295,7 +426,7 @@ private fun FormationRecommendationCard(recommendation: FormationRecommendation,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
-            FormationMiniLayout(recommendation.formation.name)
+            FormationMiniLayout(recommendation.formation.name, compact = true)
         }
     }
 }
@@ -307,53 +438,97 @@ private fun FormationLayoutCard(enemyName: String) {
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
-                text = "阵型布局示意",
+                text = "${FORMATION_FULL_NAMES[enemyName] ?: enemyName} 布局示意",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onTertiaryContainer
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(12.dp))
-            FormationMiniLayout(enemyName)
+            FormationMiniLayout(enemyName, compact = false)
+            Spacer(modifier = Modifier.height(12.dp))
+            FormationLayoutLegend()
         }
     }
 }
 
 @Composable
-private fun FormationMiniLayout(formationName: String) {
-    val positions = when (formationName) {
-        "方" -> listOf(listOf(0,1,0), listOf(1,1,1), listOf(0,1,0))
-        "圆" -> listOf(listOf(0,1,0), listOf(1,1,1), listOf(0,1,0))
-        "锥" -> listOf(listOf(0,1,0), listOf(1,0,1), listOf(1,1,1))
-        "雁" -> listOf(listOf(1,0,1), listOf(0,1,0), listOf(0,1,0))
-        "玄" -> listOf(listOf(1,0,1), listOf(0,1,0), listOf(1,0,1))
-        "鱼" -> listOf(listOf(1,0,0), listOf(1,1,0), listOf(1,1,1))
-        "钩" -> listOf(listOf(1,0,0), listOf(1,1,0), listOf(0,1,1))
-        "冲" -> listOf(listOf(0,1,0), listOf(0,1,0), listOf(1,1,1))
-        "箭" -> listOf(listOf(0,1,0), listOf(1,1,1), listOf(1,0,1))
-        else -> listOf(listOf(1,1,1), listOf(1,1,1), listOf(1,1,1))
+private fun FormationLayoutLegend() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary)
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text("前排", style = MaterialTheme.typography.labelSmall)
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(Blue700)
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text("后排", style = MaterialTheme.typography.labelSmall)
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Box(
+                modifier = Modifier
+                    .size(12.dp)
+                    .clip(CircleShape)
+                    .background(Gold700)
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text("将领", style = MaterialTheme.typography.labelSmall)
+        }
     }
+}
+
+@Composable
+private fun FormationMiniLayout(formationName: String, compact: Boolean = true) {
+    val positions = FORMATION_MATRICES[formationName]
+        ?: List(11) { List(11) { 1 } }
+
+    val cellSize = if (compact) 10.dp else 20.dp
+    val gap = if (compact) 2.dp else 3.dp
 
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         positions.forEach { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(gap)) {
                 row.forEach { cell ->
+                    val color = when (cell) {
+                        1 -> MaterialTheme.colorScheme.primary
+                        2 -> Blue700
+                        9 -> Gold700
+                        else -> MaterialTheme.colorScheme.surfaceVariant
+                    }
                     Box(
                         modifier = Modifier
-                            .size(28.dp)
+                            .size(cellSize)
                             .clip(CircleShape)
-                            .background(
-                                if (cell == 1) MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.surfaceVariant
-                            )
+                            .background(color)
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(gap))
         }
     }
 }
