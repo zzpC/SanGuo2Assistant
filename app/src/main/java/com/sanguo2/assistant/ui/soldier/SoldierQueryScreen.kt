@@ -19,10 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,12 +40,8 @@ fun SoldierQueryScreen(
     val searchQuery by viewModel.searchQuery.collectAsState()
     var expanded by remember { mutableStateOf(value = false) }
     val soldierNames by viewModel.soldierNames.collectAsState()
-    val filteredNames = if (searchQuery.isBlank()) soldierNames
-        else soldierNames.filter { it.contains(searchQuery) }
 
     var selectedSoldier by remember { mutableStateOf<Soldier?>(null) }
-    val focusManager = LocalFocusManager.current
-    val focusRequester = remember { FocusRequester() }
 
     selectedSoldier?.let { soldier ->
         SoldierDetailBottomSheet(
@@ -61,7 +54,6 @@ fun SoldierQueryScreen(
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectTapGestures {
-                    focusManager.clearFocus()
                     expanded = false
                 }
             }
@@ -84,11 +76,9 @@ fun SoldierQueryScreen(
         ) {
             OutlinedTextField(
                 value = searchQuery,
-                onValueChange = {
-                    viewModel.onSearchQueryChanged(it)
-                    expanded = true
-                },
-                label = { Text("输入或选择敌方兵种") },
+                onValueChange = { },
+                readOnly = true,
+                label = { Text("选择敌方兵种") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
@@ -104,8 +94,7 @@ fun SoldierQueryScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .menuAnchor()
-                    .focusRequester(focusRequester),
+                    .menuAnchor(),
                 singleLine = true,
                 shape = RoundedCornerShape(12.dp)
             )
@@ -114,7 +103,7 @@ fun SoldierQueryScreen(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                filteredNames.forEach { name ->
+                soldierNames.forEach { name ->
                     DropdownMenuItem(
                         text = { Text(name) },
                         onClick = {
@@ -147,7 +136,6 @@ fun SoldierQueryScreen(
                 SoldierQueryResultContent(
                     result = result
                 ) { soldier ->
-                    focusManager.clearFocus()
                     expanded = false
                     selectedSoldier = soldier
                 }
