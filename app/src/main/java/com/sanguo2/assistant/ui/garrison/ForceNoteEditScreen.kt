@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -30,7 +31,6 @@ fun ForceNoteEditScreen(
     viewModel: ForceNoteViewModel = hiltViewModel()
 ) {
     val editState by viewModel.editState.collectAsState()
-    val soldierNames by remember { derivedStateOf { viewModel.uiState.value.soldierNames } }
     val focusManager = LocalFocusManager.current
     var soldierDropdownIndex by remember { mutableStateOf(-1) }
 
@@ -171,14 +171,12 @@ fun ForceNoteEditScreen(
                 SoldierConfigRow(
                     index = index,
                     configItem = configItem,
-                    soldierNames = soldierNames,
                     canRemove = editState.soldierConfigs.size > 1,
                     onTypeChanged = { viewModel.onSoldierTypeChanged(index, it) },
                     onCountChanged = { viewModel.onSoldierCountChanged(index, it) },
                     onRemove = { viewModel.removeSoldierConfig(index) },
                     dropdownExpanded = soldierDropdownIndex == index,
-                    onDropdownExpandedChange = { soldierDropdownIndex = if (it) index else -1 },
-                    focusManager = focusManager
+                    onDropdownExpandedChange = { soldierDropdownIndex = if (it) index else -1 }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -238,15 +236,17 @@ fun ForceNoteEditScreen(
 private fun SoldierConfigRow(
     index: Int,
     configItem: SoldierConfigUiItem,
-    soldierNames: List<String>,
     canRemove: Boolean,
     onTypeChanged: (String) -> Unit,
     onCountChanged: (String) -> Unit,
     onRemove: () -> Unit,
     dropdownExpanded: Boolean,
-    onDropdownExpandedChange: (Boolean) -> Unit,
-    focusManager: androidx.compose.ui.focus.FocusManager
+    onDropdownExpandedChange: (Boolean) -> Unit
 ) {
+    var selectedCategory by remember { mutableStateOf<String?>(null) }
+    val originalSoldiers = listOf("朴刀", "长枪", "大刀", "弓箭", "链锤", "飞刀", "武斗", "蛮族", "铁锤", "藤甲", "黄巾", "弩兵", "女兵")
+    val newSoldiers = listOf("刺客", "无当", "白马", "虎豹", "白毦", "西凉", "尸兵", "猛兽", "战车", "巫女", "解烦", "金甲", "陷阵")
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(10.dp),
@@ -264,10 +264,8 @@ private fun SoldierConfigRow(
             ) {
                 OutlinedTextField(
                     value = configItem.soldierType,
-                    onValueChange = {
-                        onTypeChanged(it)
-                        onDropdownExpandedChange(it.isNotBlank())
-                    },
+                    onValueChange = { },
+                    readOnly = true,
                     placeholder = { Text("兵种", style = MaterialTheme.typography.bodySmall) },
                     trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(16.dp)) },
                     modifier = Modifier.menuAnchor().fillMaxWidth(),
@@ -275,17 +273,46 @@ private fun SoldierConfigRow(
                     shape = RoundedCornerShape(8.dp),
                     textStyle = MaterialTheme.typography.bodySmall
                 )
-                ExposedDropdownMenu(expanded = dropdownExpanded, onDismissRequest = { onDropdownExpandedChange(false) }) {
-                    val filtered = if (configItem.soldierType.isBlank()) soldierNames else soldierNames.filter { it.contains(configItem.soldierType) }
-                    filtered.forEach { name ->
+                ExposedDropdownMenu(
+                    expanded = dropdownExpanded,
+                    onDismissRequest = { 
+                        onDropdownExpandedChange(false)
+                        selectedCategory = null
+                    }
+                ) {
+                    if (selectedCategory == null) {
                         DropdownMenuItem(
-                            text = { Text(name, style = MaterialTheme.typography.bodySmall) },
-                            onClick = {
-                                onTypeChanged(name)
-                                onDropdownExpandedChange(false)
-                                focusManager.clearFocus()
-                            }
+                            text = { Text("原版兵种", style = MaterialTheme.typography.bodySmall) },
+                            trailingIcon = { Icon(Icons.Default.ChevronRight, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                            onClick = { selectedCategory = "original" }
                         )
+                        DropdownMenuItem(
+                            text = { Text("新兵种", style = MaterialTheme.typography.bodySmall) },
+                            trailingIcon = { Icon(Icons.Default.ChevronRight, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                            onClick = { selectedCategory = "new" }
+                        )
+                    } else {
+                        DropdownMenuItem(
+                            text = { 
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, modifier = Modifier.size(16.dp))
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Text(if (selectedCategory == "original") "原版兵种" else "新兵种", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.bodySmall)
+                                }
+                            },
+                            onClick = { selectedCategory = null }
+                        )
+                        val listToShow = if (selectedCategory == "original") originalSoldiers else newSoldiers
+                        listToShow.forEach { name ->
+                            DropdownMenuItem(
+                                text = { Text(name, style = MaterialTheme.typography.bodySmall) },
+                                onClick = {
+                                    onTypeChanged(name)
+                                    onDropdownExpandedChange(false)
+                                    selectedCategory = null
+                                }
+                            )
+                        }
                     }
                 }
             }
