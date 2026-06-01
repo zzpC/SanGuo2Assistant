@@ -10,10 +10,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.MilitaryTech
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -39,7 +41,11 @@ fun SoldierQueryScreen(
     val errorMessage by viewModel.errorMessage.collectAsState()
     val searchQuery by viewModel.searchQuery.collectAsState()
     var expanded by remember { mutableStateOf(value = false) }
-    val soldierNames by viewModel.soldierNames.collectAsState()
+    
+    // Categorized selection state
+    val originalSoldiers = listOf("朴刀", "长枪", "大刀", "弓箭", "链锤", "飞刀", "武斗", "蛮族", "铁锤", "藤甲", "黄巾", "弩兵", "女兵")
+    val newSoldiers = listOf("刺客", "无当", "白马", "虎豹", "白毦", "西凉", "尸兵", "猛兽", "战车", "巫女", "解烦", "金甲", "陷阵")
+    var selectedCategory by remember { mutableStateOf<String?>(null) }
 
     var selectedSoldier by remember { mutableStateOf<Soldier?>(null) }
 
@@ -55,6 +61,7 @@ fun SoldierQueryScreen(
             .pointerInput(Unit) {
                 detectTapGestures {
                     expanded = false
+                    selectedCategory = null
                 }
             }
     ) {
@@ -101,17 +108,45 @@ fun SoldierQueryScreen(
 
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { 
+                    expanded = false
+                    selectedCategory = null
+                }
             ) {
-                soldierNames.forEach { name ->
+                if (selectedCategory == null) {
                     DropdownMenuItem(
-                        text = { Text(name) },
-                        onClick = {
-                            viewModel.onSearchQueryChanged(name)
-                            viewModel.querySoldier(name)
-                            expanded = false
-                        }
+                        text = { Text("原版兵种") },
+                        trailingIcon = { Icon(Icons.Default.ChevronRight, contentDescription = null) },
+                        onClick = { selectedCategory = "original" }
                     )
+                    DropdownMenuItem(
+                        text = { Text("新兵种") },
+                        trailingIcon = { Icon(Icons.Default.ChevronRight, contentDescription = null) },
+                        onClick = { selectedCategory = "new" }
+                    )
+                } else {
+                    DropdownMenuItem(
+                        text = { 
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, modifier = Modifier.size(18.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(if (selectedCategory == "original") "原版兵种" else "新兵种", color = MaterialTheme.colorScheme.primary)
+                            }
+                        },
+                        onClick = { selectedCategory = null }
+                    )
+                    val listToShow = if (selectedCategory == "original") originalSoldiers else newSoldiers
+                    listToShow.forEach { name ->
+                        DropdownMenuItem(
+                            text = { Text(name) },
+                            onClick = {
+                                viewModel.onSearchQueryChanged(name)
+                                viewModel.querySoldier(name)
+                                expanded = false
+                                selectedCategory = null
+                            }
+                        )
+                    }
                 }
             }
         }
