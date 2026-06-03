@@ -47,7 +47,7 @@ sealed class GarrisonRoute(val route: String) {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    val bottomScreens = listOf(Screen.Soldier, Screen.Formation, Screen.Garrison, Screen.Settings)
+    val bottomScreens = listOf(Screen.Garrison, Screen.Formation, Screen.Soldier, Screen.Settings)
 
     Scaffold(
         bottomBar = {
@@ -75,7 +75,7 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Soldier.route,
+            startDestination = Screen.Garrison.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Soldier.route) {
