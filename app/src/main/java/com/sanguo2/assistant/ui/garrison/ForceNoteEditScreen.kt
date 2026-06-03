@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sanguo2.assistant.ui.components.QuickCounterBottomSheet
 import com.sanguo2.assistant.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,6 +34,7 @@ fun ForceNoteEditScreen(
     val editState by viewModel.editState.collectAsState()
     val focusManager = LocalFocusManager.current
     var soldierDropdownIndex by remember { mutableStateOf(-1) }
+    var quickQuerySoldierName by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(noteId) {
         if (isEdit && noteId > 0) {
@@ -147,22 +149,6 @@ fun ForceNoteEditScreen(
                     Spacer(modifier = Modifier.width(6.dp))
                     Text("兵种配置", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                 }
-                val totalCount = editState.soldierConfigs.sumOf { it.count.toIntOrNull() ?: 0 }
-                Text(
-                    "${totalCount}/15 将",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = when {
-                        totalCount > 15 -> Red700
-                        totalCount > 0 -> Green700
-                        else -> Gray600
-                    },
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            editState.generalCountError?.let { error ->
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(error, style = MaterialTheme.typography.labelSmall, color = Red700)
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -173,8 +159,8 @@ fun ForceNoteEditScreen(
                     configItem = configItem,
                     canRemove = editState.soldierConfigs.size > 1,
                     onTypeChanged = { viewModel.onSoldierTypeChanged(index, it) },
-                    onCountChanged = { viewModel.onSoldierCountChanged(index, it) },
                     onRemove = { viewModel.removeSoldierConfig(index) },
+                    onQuickQuery = { quickQuerySoldierName = it },
                     dropdownExpanded = soldierDropdownIndex == index,
                     onDropdownExpandedChange = { soldierDropdownIndex = if (it) index else -1 }
                 )
@@ -228,6 +214,13 @@ fun ForceNoteEditScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
         }
+
+        quickQuerySoldierName?.let { name ->
+            QuickCounterBottomSheet(
+                soldierName = name,
+                onDismissRequest = { quickQuerySoldierName = null }
+            )
+        }
     }
 }
 
@@ -238,8 +231,8 @@ private fun SoldierConfigRow(
     configItem: SoldierConfigUiItem,
     canRemove: Boolean,
     onTypeChanged: (String) -> Unit,
-    onCountChanged: (String) -> Unit,
     onRemove: () -> Unit,
+    onQuickQuery: (String) -> Unit,
     dropdownExpanded: Boolean,
     onDropdownExpandedChange: (Boolean) -> Unit
 ) {
@@ -260,13 +253,13 @@ private fun SoldierConfigRow(
             ExposedDropdownMenuBox(
                 expanded = dropdownExpanded,
                 onExpandedChange = onDropdownExpandedChange,
-                modifier = Modifier.weight(1.6f)
+                modifier = Modifier.weight(1f)
             ) {
                 OutlinedTextField(
                     value = configItem.soldierType,
                     onValueChange = { },
                     readOnly = true,
-                    placeholder = { Text("兵种", style = MaterialTheme.typography.bodySmall) },
+                    placeholder = { Text("点击选择兵种", style = MaterialTheme.typography.bodySmall) },
                     trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(16.dp)) },
                     modifier = Modifier.menuAnchor().fillMaxWidth(),
                     singleLine = true,
@@ -317,17 +310,18 @@ private fun SoldierConfigRow(
                 }
             }
 
-            OutlinedTextField(
-                value = configItem.count,
-                onValueChange = onCountChanged,
-                placeholder = { Text("数量", style = MaterialTheme.typography.bodySmall) },
-                isError = configItem.countError != null,
-                modifier = Modifier.weight(0.8f),
-                singleLine = true,
-                shape = RoundedCornerShape(8.dp),
-                textStyle = MaterialTheme.typography.bodySmall,
-                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
+            IconButton(
+                onClick = { onQuickQuery(configItem.soldierType) },
+                enabled = configItem.soldierType.isNotBlank(),
+                modifier = Modifier.size(40.dp)
+            ) {
+                Icon(
+                    Icons.Default.MilitaryTech, 
+                    contentDescription = "查询克制", 
+                    tint = if (configItem.soldierType.isNotBlank()) Gold700 else Gray400,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
 
             if (canRemove) {
                 IconButton(onClick = onRemove, modifier = Modifier.size(32.dp)) {

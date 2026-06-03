@@ -30,9 +30,7 @@ data class NoteDetailUiState(
 
 data class SoldierConfigUiItem(
     val id: Long = 0,
-    val soldierType: String = "",
-    val count: String = "",
-    val countError: String? = null
+    val soldierType: String = ""
 )
 
 data class NoteEditUiState(
@@ -44,7 +42,6 @@ data class NoteEditUiState(
     val soldierConfigs: List<SoldierConfigUiItem> = listOf(SoldierConfigUiItem()),
     val isEdit: Boolean = false,
     val cityNameError: String? = null,
-    val generalCountError: String? = null,
     val isSaving: Boolean = false,
     val saveSuccess: Boolean = false
 )
@@ -150,11 +147,10 @@ class ForceNoteViewModel @Inject constructor(
                 customLabel = note.customLabel,
                 remark = note.remark,
                 soldierConfigs = noteWithConfigs.configs.map { cfg ->
-                    SoldierConfigUiItem(id = cfg.id, soldierType = cfg.soldierType, count = cfg.count.toString())
+                    SoldierConfigUiItem(id = cfg.id, soldierType = cfg.soldierType)
                 },
                 isEdit = true,
                 cityNameError = null,
-                generalCountError = null,
                 isSaving = false,
                 saveSuccess = false
             )}
@@ -168,7 +164,6 @@ class ForceNoteViewModel @Inject constructor(
                 soldierConfigs = listOf(SoldierConfigUiItem()),
                 isEdit = false,
                 cityNameError = null,
-                generalCountError = null,
                 isSaving = false,
                 saveSuccess = false
             )}
@@ -213,44 +208,18 @@ class ForceNoteViewModel @Inject constructor(
         }
     }
 
-    fun onSoldierCountChanged(index: Int, count: String) {
-        val configs = _editState.value.soldierConfigs.toMutableList()
-        if (index in configs.indices) {
-            configs[index] = configs[index].copy(count = count, countError = null)
-            _editState.update { it.copy(soldierConfigs = configs, generalCountError = null) }
-        }
-    }
-
     fun saveNote() {
         val state = _editState.value
         var hasError = false
 
         val validConfigs = mutableListOf<SoldierConfigUiItem>()
-        var totalCount = 0
         for (cfg in state.soldierConfigs) {
-            val countVal = cfg.count.toIntOrNull()
             if (cfg.soldierType.isBlank()) continue
-            if (countVal == null || countVal < 1) {
-                val configs = _editState.value.soldierConfigs.toMutableList()
-                val idx = state.soldierConfigs.indexOf(cfg)
-                if (idx >= 0) {
-                    configs[idx] = configs[idx].copy(countError = "请输入正整数")
-                    _editState.update { it.copy(soldierConfigs = configs) }
-                }
-                hasError = true
-                continue
-            }
-            totalCount += countVal
             validConfigs.add(cfg)
         }
 
         if (validConfigs.isEmpty()) {
-            _editState.update { it.copy(generalCountError = "至少需要一种兵种配置") }
-            hasError = true
-        }
-
-        if (totalCount > 15) {
-            _editState.update { it.copy(generalCountError = "将领总数不能超过15人（当前${totalCount}人）") }
+            _uiState.update { it.copy(errorMessage = "至少需要一种兵种配置") }
             hasError = true
         }
 
@@ -272,7 +241,7 @@ class ForceNoteViewModel @Inject constructor(
                         id = 0,
                         forceNoteId = note.id,
                         soldierType = cfg.soldierType,
-                        count = cfg.count.toInt()
+                        count = 1 // Default to 1 as requested UI removal
                     )
                 }
 

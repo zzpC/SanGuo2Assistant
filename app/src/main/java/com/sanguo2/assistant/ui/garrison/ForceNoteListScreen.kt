@@ -228,7 +228,6 @@ private fun ForceNoteCard(
 ) {
     val note = item.note
     val label = getForceLabel(item)
-    val totalCount = item.configs.sumOf { it.count }
     val isCity = note.forceType == "city"
 
     Card(
@@ -260,18 +259,9 @@ private fun ForceNoteCard(
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Column(modifier = Modifier.weight(1f)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            "${totalCount}将",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
+                    Text(label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Spacer(modifier = Modifier.height(2.dp))
-                    val configText = item.configs.joinToString("  ") { "${it.soldierType}×${it.count}" }
+                    val configText = item.configs.joinToString("  ") { it.soldierType }
                     Text(configText, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 }
                 IconButton(onClick = onDelete) {

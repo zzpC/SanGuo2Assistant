@@ -86,7 +86,6 @@ private fun ForceInfoCard(item: ForceNoteWithConfigs) {
         !isCity && note.customLabel.isNotBlank() -> note.customLabel
         else -> "未命名部队"
     }
-    val totalCount = item.configs.sumOf { it.count }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -115,13 +114,6 @@ private fun ForceInfoCard(item: ForceNoteWithConfigs) {
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
-                }
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("$totalCount", style = MaterialTheme.typography.displaySmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
-                    Text("将领总数", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f))
                 }
             }
         }
@@ -153,12 +145,6 @@ private fun SoldierConfigCard(configs: List<SoldierConfig>) {
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(config.soldierType, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
                     }
-                    Text(
-                        "${config.count}个",
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
                 }
                 if (index < configs.size - 1) {
                     Divider(modifier = Modifier.padding(vertical = 2.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
