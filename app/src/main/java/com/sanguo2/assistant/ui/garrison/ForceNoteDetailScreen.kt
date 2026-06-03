@@ -1,6 +1,7 @@
 package com.sanguo2.assistant.ui.garrison
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sanguo2.assistant.data.local.entity.SoldierConfig
 import com.sanguo2.assistant.data.repository.ForceNoteWithConfigs
+import com.sanguo2.assistant.ui.components.QuickCounterBottomSheet
 import com.sanguo2.assistant.ui.theme.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,50 +31,65 @@ fun ForceNoteDetailScreen(
     viewModel: ForceNoteViewModel = hiltViewModel()
 ) {
     val detailState by viewModel.detailState.collectAsState()
+    var quickQuerySoldierName by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(noteId) {
         viewModel.loadNoteDetail(noteId)
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onNavigateBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "返回")
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "备注详情",
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.weight(1f)
-            )
-            IconButton(onClick = { onNavigateToEdit(noteId) }) {
-                Icon(Icons.Default.Edit, contentDescription = "编辑", tint = MaterialTheme.colorScheme.primary)
-            }
-        }
-
-        if (detailState.isLoading) {
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-        }
-
-        detailState.noteWithConfigs?.let { item ->
-            LazyColumn(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                item { ForceInfoCard(item) }
-
-                item { SoldierConfigCard(item.configs) }
-
-                if (item.note.remark.isNotBlank()) {
-                    item { RemarkCard(item.note.remark) }
+                IconButton(onClick = onNavigateBack) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "返回")
                 }
-
-                item { TimeInfoCard(item) }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "备注详情",
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.weight(1f)
+                )
+                IconButton(onClick = { onNavigateToEdit(noteId) }) {
+                    Icon(Icons.Default.Edit, contentDescription = "编辑", tint = MaterialTheme.colorScheme.primary)
+                }
             }
+
+            if (detailState.isLoading) {
+                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            }
+
+            detailState.noteWithConfigs?.let { item ->
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    item { ForceInfoCard(item) }
+
+                    item { 
+                        SoldierConfigCard(
+                            configs = item.configs,
+                            onQuickQuery = { quickQuerySoldierName = it }
+                        ) 
+                    }
+
+                    if (item.note.remark.isNotBlank()) {
+                        item { RemarkCard(item.note.remark) }
+                    }
+
+                    item { TimeInfoCard(item) }
+                }
+            }
+        }
+
+        quickQuerySoldierName?.let { name ->
+            QuickCounterBottomSheet(
+                soldierName = name,
+                onDismissRequest = { quickQuerySoldierName = null }
+            )
         }
     }
 }
@@ -121,7 +138,10 @@ private fun ForceInfoCard(item: ForceNoteWithConfigs) {
 }
 
 @Composable
-private fun SoldierConfigCard(configs: List<SoldierConfig>) {
+private fun SoldierConfigCard(
+    configs: List<SoldierConfig>,
+    onQuickQuery: (String) -> Unit
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
@@ -136,7 +156,11 @@ private fun SoldierConfigCard(configs: List<SoldierConfig>) {
             Spacer(modifier = Modifier.height(10.dp))
             configs.forEachIndexed { index, config ->
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { onQuickQuery(config.soldierType) }
+                        .padding(vertical = 8.dp, horizontal = 4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -145,6 +169,12 @@ private fun SoldierConfigCard(configs: List<SoldierConfig>) {
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(config.soldierType, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
                     }
+                    Icon(
+                        Icons.Default.MilitaryTech, 
+                        contentDescription = "查询克制", 
+                        tint = Gold700,
+                        modifier = Modifier.size(20.dp)
+                    )
                 }
                 if (index < configs.size - 1) {
                     Divider(modifier = Modifier.padding(vertical = 2.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
