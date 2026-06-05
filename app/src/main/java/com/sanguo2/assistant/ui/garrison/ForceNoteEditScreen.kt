@@ -1,5 +1,6 @@
 package com.sanguo2.assistant.ui.garrison
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -32,8 +33,10 @@ fun ForceNoteEditScreen(
     viewModel: ForceNoteViewModel = hiltViewModel()
 ) {
     val editState by viewModel.editState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     val focusManager = LocalFocusManager.current
     var soldierDropdownIndex by remember { mutableStateOf(-1) }
+    var plannedDropdownExpanded by remember { mutableStateOf(false) }
     var quickQuerySoldierName by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(noteId) {
@@ -136,6 +139,51 @@ fun ForceNoteEditScreen(
                 maxLines = 4,
                 shape = RoundedCornerShape(12.dp)
             )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text("我方计划上阵（可选）", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Box(modifier = Modifier.fillMaxWidth()) {
+                OutlinedTextField(
+                    value = editState.plannedSoldierType,
+                    onValueChange = { },
+                    readOnly = true,
+                    placeholder = { Text("点击选择兵种") },
+                    leadingIcon = { Icon(Icons.Default.MilitaryTech, contentDescription = null) },
+                    trailingIcon = {
+                        Row {
+                            if (editState.plannedSoldierType.isNotBlank()) {
+                                IconButton(onClick = { viewModel.onPlannedSoldierTypeChanged("") }) {
+                                    Icon(Icons.Default.Clear, contentDescription = "清除")
+                                }
+                            }
+                            IconButton(onClick = { plannedDropdownExpanded = true }) {
+                                Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+                            }
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth().clickable { plannedDropdownExpanded = true },
+                    shape = RoundedCornerShape(12.dp)
+                )
+
+                DropdownMenu(
+                    expanded = plannedDropdownExpanded,
+                    onDismissRequest = { plannedDropdownExpanded = false },
+                    modifier = Modifier.fillMaxWidth(0.9f).heightIn(max = 400.dp)
+                ) {
+                    uiState.soldierNames.forEach { name ->
+                        DropdownMenuItem(
+                            text = { Text(name) },
+                            onClick = {
+                                viewModel.onPlannedSoldierTypeChanged(name)
+                                plannedDropdownExpanded = false
+                            }
+                        )
+                    }
+                }
+            }
 
             Spacer(modifier = Modifier.height(20.dp))
 

@@ -39,6 +39,7 @@ data class NoteEditUiState(
     val cityName: String = "",
     val customLabel: String = "",
     val remark: String = "",
+    val plannedSoldierType: String = "",
     val soldierConfigs: List<SoldierConfigUiItem> = listOf(SoldierConfigUiItem()),
     val isEdit: Boolean = false,
     val cityNameError: String? = null,
@@ -146,8 +147,9 @@ class ForceNoteViewModel @Inject constructor(
                 cityName = note.cityName,
                 customLabel = note.customLabel,
                 remark = note.remark,
-                soldierConfigs = noteWithConfigs.configs.map { cfg ->
-                    SoldierConfigUiItem(id = cfg.id, soldierType = cfg.soldierType)
+                plannedSoldierType = note.plannedSoldierType ?: "",
+                soldierConfigs = noteWithConfigs.configs.flatMap { cfg ->
+                    List(cfg.count) { SoldierConfigUiItem(id = 0, soldierType = cfg.soldierType) }
                 },
                 isEdit = true,
                 cityNameError = null,
@@ -161,6 +163,7 @@ class ForceNoteViewModel @Inject constructor(
                 cityName = "",
                 customLabel = "",
                 remark = "",
+                plannedSoldierType = "",
                 soldierConfigs = listOf(SoldierConfigUiItem()),
                 isEdit = false,
                 cityNameError = null,
@@ -184,6 +187,10 @@ class ForceNoteViewModel @Inject constructor(
 
     fun onRemarkChanged(remark: String) {
         _editState.update { it.copy(remark = remark) }
+    }
+
+    fun onPlannedSoldierTypeChanged(type: String) {
+        _editState.update { it.copy(plannedSoldierType = type) }
     }
 
     fun addSoldierConfig() {
@@ -234,24 +241,29 @@ class ForceNoteViewModel @Inject constructor(
                     cityName = if (state.forceType == "city") state.cityName.trim() else "",
                     customLabel = if (state.forceType == "field") state.customLabel.trim() else "",
                     remark = state.remark.trim(),
+                    plannedSoldierType = state.plannedSoldierType.ifBlank { null },
                     updatedAt = System.currentTimeMillis()
                 )
-                val configs = validConfigs.map { cfg ->
-                    SoldierConfig(
-                        id = 0,
-                        forceNoteId = note.id,
-                        soldierType = cfg.soldierType,
-                        count = 1 // Default to 1 as requested UI removal
-                    )
-                }
+                
+                // Aggregate identical soldier types to determine count
+                val aggregatedConfigs = validConfigs
+                    .groupBy { it.soldierType }
+                    .map { (type, items) ->
+                        SoldierConfig(
+                            id = 0,
+                            forceNoteId = note.id,
+                            soldierType = type,
+                            count = items.size
+                        )
+                    }
 
                 if (state.isEdit) {
                     val oldNoteWithConfigs = repository.getNoteWithConfigs(state.id)
                     if (oldNoteWithConfigs != null) {
-                        repository.updateNote(oldNoteWithConfigs, note, configs)
+                        repository.updateNote(oldNoteWithConfigs, note, aggregatedConfigs)
                     }
                 } else {
-                    repository.insertNote(note.copy(createdAt = System.currentTimeMillis()), configs)
+                    repository.insertNote(note.copy(createdAt = System.currentTimeMillis()), aggregatedConfigs)
                 }
                 _editState.update { it.copy(isSaving = false, saveSuccess = true) }
             } catch (e: Exception) {

@@ -103,6 +103,7 @@ private fun ForceInfoCard(item: ForceNoteWithConfigs) {
         !isCity && note.customLabel.isNotBlank() -> note.customLabel
         else -> "未命名部队"
     }
+    val totalUnits = item.configs.sumOf { it.count }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -126,11 +127,54 @@ private fun ForceInfoCard(item: ForceNoteWithConfigs) {
                 Column {
                     Text(label, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        if (isCity) "城池部队" else "野外部队",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Surface(
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.1f),
+                            shape = RoundedCornerShape(4.dp)
+                        ) {
+                            Text(
+                                if (isCity) "城池部队" else "野外部队",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            "部队总数: $totalUnits",
+                            style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                        )
+                    }
+                }
+            }
+
+            note.plannedSoldierType?.let { planned ->
+                if (planned.isNotBlank()) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Divider(color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.1f))
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.Default.Flag,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            "计划上阵: ",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                        )
+                        Text(
+                            planned,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
                 }
             }
         }
@@ -154,12 +198,18 @@ private fun SoldierConfigCard(
                 Text("兵种配置", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
             }
             Spacer(modifier = Modifier.height(10.dp))
-            configs.forEachIndexed { index, config ->
+            
+            // Flatten the configs to show each unit (general) individually as requested
+            val expandedConfigs = configs.flatMap { config ->
+                List(config.count) { config.soldierType }
+            }
+
+            expandedConfigs.forEachIndexed { index, soldierType ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(8.dp))
-                        .clickable { onQuickQuery(config.soldierType) }
+                        .clickable { onQuickQuery(soldierType) }
                         .padding(vertical = 8.dp, horizontal = 4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -167,7 +217,7 @@ private fun SoldierConfigCard(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
                         Spacer(modifier = Modifier.width(10.dp))
-                        Text(config.soldierType, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                        Text("部队 ${index + 1}: $soldierType", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
                     }
                     Icon(
                         Icons.Default.MilitaryTech, 
@@ -176,7 +226,7 @@ private fun SoldierConfigCard(
                         modifier = Modifier.size(20.dp)
                     )
                 }
-                if (index < configs.size - 1) {
+                if (index < expandedConfigs.size - 1) {
                     Divider(modifier = Modifier.padding(vertical = 2.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
                 }
             }

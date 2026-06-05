@@ -10,6 +10,7 @@ data class ForceNote(
     val cityName: String,
     val customLabel: String,
     val remark: String,
+    val plannedSoldierType: String? = null,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )
