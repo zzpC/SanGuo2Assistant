@@ -23,13 +23,29 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val storeFilePath = project.findProperty("RELEASE_STORE_FILE") as? String
+            if (storeFilePath != null) {
+                storeFile = file(storeFilePath)
+                storePassword = project.findProperty("RELEASE_STORE_PASSWORD") as? String
+                keyAlias = project.findProperty("RELEASE_KEY_ALIAS") as? String
+                keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as? String
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -56,6 +72,12 @@ android {
             excludes += "/META-INF/NOTICE"
             excludes += "/META-INF/NOTICE.txt"
         }
+    }
+}
+
+tasks.whenTaskAdded {
+    if (name.contains("ArtProfile", ignoreCase = true)) {
+        enabled = false
     }
 }
 
