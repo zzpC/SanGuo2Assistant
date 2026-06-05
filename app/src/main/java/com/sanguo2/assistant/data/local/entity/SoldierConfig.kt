@@ -17,5 +17,6 @@ data class SoldierConfig(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val forceNoteId: Long,
     val soldierType: String,
-    val count: Int
+    val count: Int,
+    val plannedCounterType: String? = null
 )

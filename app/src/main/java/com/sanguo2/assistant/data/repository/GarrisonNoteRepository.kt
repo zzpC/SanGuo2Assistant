@@ -67,4 +67,12 @@ class GarrisonNoteRepository @Inject constructor(
     suspend fun deleteAllNotes() {
         forceNoteDao.deleteAll()
     }
+
+    suspend fun updatePlannedCounterType(id: Long, plannedType: String?) {
+        soldierConfigDao.updatePlannedCounterType(id, plannedType)
+    }
+
+    suspend fun updatePlannedCounterTypeForNote(noteId: Long, soldierType: String, plannedType: String?) {
+        soldierConfigDao.updatePlannedCounterTypeForNote(noteId, soldierType, plannedType)
+    }
 }

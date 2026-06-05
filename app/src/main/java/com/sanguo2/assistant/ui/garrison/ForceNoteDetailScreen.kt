@@ -31,6 +31,7 @@ fun ForceNoteDetailScreen(
     viewModel: ForceNoteViewModel = hiltViewModel()
 ) {
     val detailState by viewModel.detailState.collectAsState()
+    var quickQueryConfigId by remember { mutableStateOf<Long>(-1L) }
     var quickQuerySoldierName by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(noteId) {
@@ -72,7 +73,11 @@ fun ForceNoteDetailScreen(
                     item { 
                         SoldierConfigCard(
                             configs = item.configs,
-                            onQuickQuery = { quickQuerySoldierName = it }
+                            onQuickQuery = { config, name -> 
+                                quickQueryConfigId = config
+                                quickQuerySoldierName = name
+                            },
+                            onClearPlanned = { viewModel.updatePlannedCounterType(it, noteId, "") }
                         ) 
                     }
 
@@ -88,7 +93,17 @@ fun ForceNoteDetailScreen(
         quickQuerySoldierName?.let { name ->
             QuickCounterBottomSheet(
                 soldierName = name,
-                onDismissRequest = { quickQuerySoldierName = null }
+                onDismissRequest = { 
+                    quickQuerySoldierName = null
+                    quickQueryConfigId = -1L
+                },
+                onSelectCounter = { 
+                    if (quickQueryConfigId != -1L) {
+                        viewModel.updatePlannedCounterType(quickQueryConfigId, noteId, it)
+                    }
+                    quickQuerySoldierName = null
+                    quickQueryConfigId = -1L
+                }
             )
         }
     }
@@ -149,34 +164,6 @@ private fun ForceInfoCard(item: ForceNoteWithConfigs) {
                     }
                 }
             }
-
-            note.plannedSoldierType?.let { planned ->
-                if (planned.isNotBlank()) {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Divider(color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.1f))
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Default.Flag,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            "计划上阵: ",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
-                        )
-                        Text(
-                            planned,
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    }
-                }
-            }
         }
     }
 }
@@ -184,7 +171,8 @@ private fun ForceInfoCard(item: ForceNoteWithConfigs) {
 @Composable
 private fun SoldierConfigCard(
     configs: List<SoldierConfig>,
-    onQuickQuery: (String) -> Unit
+    onQuickQuery: (Long, String) -> Unit,
+    onClearPlanned: (Long) -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -199,35 +187,58 @@ private fun SoldierConfigCard(
             }
             Spacer(modifier = Modifier.height(10.dp))
             
-            // Flatten the configs to show each unit (general) individually as requested
-            val expandedConfigs = configs.flatMap { config ->
-                List(config.count) { config.soldierType }
-            }
-
-            expandedConfigs.forEachIndexed { index, soldierType ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { onQuickQuery(soldierType) }
-                        .padding(vertical = 8.dp, horizontal = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Text("部队 ${index + 1}: $soldierType", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+            // Note: In Detail screen, configs are already loaded from DB with IDs.
+            // If they are saved with count > 1, we might need to expand them if we want to show distinct counters.
+            // But user said "associated with each enemy soldier entry".
+            // If they have same type but different counters, they were saved as count=1 separate rows in my new logic.
+            
+            configs.forEachIndexed { index, config ->
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable { onQuickQuery(config.id, config.soldierType) }
+                            .padding(vertical = 8.dp, horizontal = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Text("部队 ${index + 1}: ${config.soldierType}", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                        }
+                        Icon(
+                            Icons.Default.MilitaryTech, 
+                            contentDescription = "查询克制", 
+                            tint = Gold700,
+                            modifier = Modifier.size(20.dp)
+                        )
                     }
-                    Icon(
-                        Icons.Default.MilitaryTech, 
-                        contentDescription = "查询克制", 
-                        tint = Gold700,
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-                if (index < expandedConfigs.size - 1) {
-                    Divider(modifier = Modifier.padding(vertical = 2.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                    
+                    if (config.plannedCounterType?.isNotBlank() == true) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(start = 22.dp, bottom = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Default.Flag, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                "计划上阵: ${config.plannedCounterType}", 
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            IconButton(onClick = { onClearPlanned(config.id) }, modifier = Modifier.size(16.dp)) {
+                                Icon(Icons.Default.Clear, contentDescription = "清除", tint = Gray400, modifier = Modifier.size(12.dp))
+                            }
+                        }
+                    }
+
+                    if (index < configs.size - 1) {
+                        Divider(modifier = Modifier.padding(vertical = 2.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                    }
                 }
             }
         }

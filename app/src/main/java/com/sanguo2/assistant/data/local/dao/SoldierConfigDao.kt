@@ -29,4 +29,10 @@ interface SoldierConfigDao {
 
     @Query("DELETE FROM soldier_configs WHERE forceNoteId = :forceNoteId")
     suspend fun deleteByForceNoteId(forceNoteId: Long)
+
+    @Query("UPDATE soldier_configs SET plannedCounterType = :plannedType WHERE id = :id")
+    suspend fun updatePlannedCounterType(id: Long, plannedType: String?)
+
+    @Query("UPDATE soldier_configs SET plannedCounterType = :plannedType WHERE forceNoteId = :noteId AND soldierType = :soldierType")
+    suspend fun updatePlannedCounterTypeForNote(noteId: Long, soldierType: String, plannedType: String?)
 }

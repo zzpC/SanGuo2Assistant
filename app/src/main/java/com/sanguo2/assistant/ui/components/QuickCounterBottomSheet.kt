@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.MilitaryTech
 import androidx.compose.material3.*
@@ -28,6 +29,7 @@ import com.sanguo2.assistant.ui.theme.*
 fun QuickCounterBottomSheet(
     soldierName: String,
     onDismissRequest: () -> Unit,
+    onSelectCounter: ((String) -> Unit)? = null,
     viewModel: SoldierQueryViewModel = hiltViewModel()
 ) {
     val queryResult by viewModel.queryResult.collectAsState()
@@ -102,7 +104,13 @@ fun QuickCounterBottomSheet(
                         items(result.counterSoldiers) { counter ->
                             SimpleCounterSoldierCard(
                                 counter = counter,
-                                onClick = { selectedSoldierDetail = counter.soldier }
+                                onClick = { selectedSoldierDetail = counter.soldier },
+                                onSelect = onSelectCounter?.let { 
+                                    { 
+                                        it(counter.soldier.name)
+                                        onDismissRequest()
+                                    }
+                                }
                             )
                         }
 
@@ -148,7 +156,8 @@ private fun RushInfoCard(rushInfo: String) {
 @Composable
 private fun SimpleCounterSoldierCard(
     counter: CounterSoldier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onSelect: (() -> Unit)? = null
 ) {
     val barColor = when {
         counter.restraintValue >= 50 -> Green700
@@ -172,7 +181,7 @@ private fun SimpleCounterSoldierCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(modifier = Modifier.weight(1f), verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = counter.soldier.name,
                     style = MaterialTheme.typography.titleMedium,
@@ -188,13 +197,29 @@ private fun SimpleCounterSoldierCard(
                     fontWeight = FontWeight.Bold,
                     color = barColor
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Icon(
-                    Icons.Default.Info,
-                    contentDescription = "详情",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
-                    modifier = Modifier.size(20.dp)
-                )
+                
+                if (onSelect != null) {
+                    Spacer(modifier = Modifier.width(12.dp))
+                    IconButton(
+                        onClick = onSelect,
+                        modifier = Modifier.size(32.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.Flag,
+                            contentDescription = "选为计划上阵",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                } else {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Icon(
+                        Icons.Default.Info,
+                        contentDescription = "详情",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
         }
     }

@@ -30,7 +30,8 @@ data class NoteDetailUiState(
 
 data class SoldierConfigUiItem(
     val id: Long = 0,
-    val soldierType: String = ""
+    val soldierType: String = "",
+    val plannedCounterType: String = ""
 )
 
 data class NoteEditUiState(
@@ -39,7 +40,6 @@ data class NoteEditUiState(
     val cityName: String = "",
     val customLabel: String = "",
     val remark: String = "",
-    val plannedSoldierType: String = "",
     val soldierConfigs: List<SoldierConfigUiItem> = listOf(SoldierConfigUiItem()),
     val isEdit: Boolean = false,
     val cityNameError: String? = null,
@@ -147,9 +147,14 @@ class ForceNoteViewModel @Inject constructor(
                 cityName = note.cityName,
                 customLabel = note.customLabel,
                 remark = note.remark,
-                plannedSoldierType = note.plannedSoldierType ?: "",
                 soldierConfigs = noteWithConfigs.configs.flatMap { cfg ->
-                    List(cfg.count) { SoldierConfigUiItem(id = 0, soldierType = cfg.soldierType) }
+                    List(cfg.count) { 
+                        SoldierConfigUiItem(
+                            id = cfg.id, 
+                            soldierType = cfg.soldierType,
+                            plannedCounterType = cfg.plannedCounterType ?: ""
+                        ) 
+                    }
                 },
                 isEdit = true,
                 cityNameError = null,
@@ -163,7 +168,6 @@ class ForceNoteViewModel @Inject constructor(
                 cityName = "",
                 customLabel = "",
                 remark = "",
-                plannedSoldierType = "",
                 soldierConfigs = listOf(SoldierConfigUiItem()),
                 isEdit = false,
                 cityNameError = null,
@@ -189,10 +193,6 @@ class ForceNoteViewModel @Inject constructor(
         _editState.update { it.copy(remark = remark) }
     }
 
-    fun onPlannedSoldierTypeChanged(type: String) {
-        _editState.update { it.copy(plannedSoldierType = type) }
-    }
-
     fun addSoldierConfig() {
         val configs = _editState.value.soldierConfigs.toMutableList()
         configs.add(SoldierConfigUiItem())
@@ -211,6 +211,14 @@ class ForceNoteViewModel @Inject constructor(
         val configs = _editState.value.soldierConfigs.toMutableList()
         if (index in configs.indices) {
             configs[index] = configs[index].copy(soldierType = type)
+            _editState.update { it.copy(soldierConfigs = configs) }
+        }
+    }
+
+    fun onPlannedCounterTypeChanged(index: Int, type: String) {
+        val configs = _editState.value.soldierConfigs.toMutableList()
+        if (index in configs.indices) {
+            configs[index] = configs[index].copy(plannedCounterType = type)
             _editState.update { it.copy(soldierConfigs = configs) }
         }
     }
@@ -241,29 +249,26 @@ class ForceNoteViewModel @Inject constructor(
                     cityName = if (state.forceType == "city") state.cityName.trim() else "",
                     customLabel = if (state.forceType == "field") state.customLabel.trim() else "",
                     remark = state.remark.trim(),
-                    plannedSoldierType = state.plannedSoldierType.ifBlank { null },
                     updatedAt = System.currentTimeMillis()
                 )
                 
-                // Aggregate identical soldier types to determine count
-                val aggregatedConfigs = validConfigs
-                    .groupBy { it.soldierType }
-                    .map { (type, items) ->
-                        SoldierConfig(
-                            id = 0,
-                            forceNoteId = note.id,
-                            soldierType = type,
-                            count = items.size
-                        )
-                    }
+                val configsToSave = validConfigs.map { item ->
+                    SoldierConfig(
+                        id = 0,
+                        forceNoteId = note.id,
+                        soldierType = item.soldierType,
+                        count = 1,
+                        plannedCounterType = item.plannedCounterType.ifBlank { null }
+                    )
+                }
 
                 if (state.isEdit) {
                     val oldNoteWithConfigs = repository.getNoteWithConfigs(state.id)
                     if (oldNoteWithConfigs != null) {
-                        repository.updateNote(oldNoteWithConfigs, note, aggregatedConfigs)
+                        repository.updateNote(oldNoteWithConfigs, note, configsToSave)
                     }
                 } else {
-                    repository.insertNote(note.copy(createdAt = System.currentTimeMillis()), aggregatedConfigs)
+                    repository.insertNote(note.copy(createdAt = System.currentTimeMillis()), configsToSave)
                 }
                 _editState.update { it.copy(isSaving = false, saveSuccess = true) }
             } catch (e: Exception) {
@@ -278,6 +283,13 @@ class ForceNoteViewModel @Inject constructor(
             _detailState.update { it.copy(isLoading = true) }
             val noteWithConfigs = repository.getNoteWithConfigs(noteId)
             _detailState.update { it.copy(noteWithConfigs = noteWithConfigs, isLoading = false) }
+        }
+    }
+
+    fun updatePlannedCounterType(configId: Long, noteId: Long, plannedType: String) {
+        viewModelScope.launch {
+            repository.updatePlannedCounterType(configId, plannedType)
+            loadNoteDetail(noteId)
         }
     }
 }

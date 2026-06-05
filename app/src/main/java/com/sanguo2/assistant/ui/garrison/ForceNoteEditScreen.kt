@@ -33,11 +33,9 @@ fun ForceNoteEditScreen(
     viewModel: ForceNoteViewModel = hiltViewModel()
 ) {
     val editState by viewModel.editState.collectAsState()
-    val uiState by viewModel.uiState.collectAsState()
     val focusManager = LocalFocusManager.current
     var soldierDropdownIndex by remember { mutableStateOf(-1) }
-    var plannedDropdownExpanded by remember { mutableStateOf(false) }
-    var quickQuerySoldierName by remember { mutableStateOf<String?>(null) }
+    var quickQuerySoldierIndex by remember { mutableStateOf(-1) }
 
     LaunchedEffect(noteId) {
         if (isEdit && noteId > 0) {
@@ -142,51 +140,6 @@ fun ForceNoteEditScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Text("我方计划上阵（可选）", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            Box(modifier = Modifier.fillMaxWidth()) {
-                OutlinedTextField(
-                    value = editState.plannedSoldierType,
-                    onValueChange = { },
-                    readOnly = true,
-                    placeholder = { Text("点击选择兵种") },
-                    leadingIcon = { Icon(Icons.Default.MilitaryTech, contentDescription = null) },
-                    trailingIcon = {
-                        Row {
-                            if (editState.plannedSoldierType.isNotBlank()) {
-                                IconButton(onClick = { viewModel.onPlannedSoldierTypeChanged("") }) {
-                                    Icon(Icons.Default.Clear, contentDescription = "清除")
-                                }
-                            }
-                            IconButton(onClick = { plannedDropdownExpanded = true }) {
-                                Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-                            }
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth().clickable { plannedDropdownExpanded = true },
-                    shape = RoundedCornerShape(12.dp)
-                )
-
-                DropdownMenu(
-                    expanded = plannedDropdownExpanded,
-                    onDismissRequest = { plannedDropdownExpanded = false },
-                    modifier = Modifier.fillMaxWidth(0.9f).heightIn(max = 400.dp)
-                ) {
-                    uiState.soldierNames.forEach { name ->
-                        DropdownMenuItem(
-                            text = { Text(name) },
-                            onClick = {
-                                viewModel.onPlannedSoldierTypeChanged(name)
-                                plannedDropdownExpanded = false
-                            }
-                        )
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -208,7 +161,8 @@ fun ForceNoteEditScreen(
                     canRemove = editState.soldierConfigs.size > 1,
                     onTypeChanged = { viewModel.onSoldierTypeChanged(index, it) },
                     onRemove = { viewModel.removeSoldierConfig(index) },
-                    onQuickQuery = { quickQuerySoldierName = it },
+                    onQuickQuery = { quickQuerySoldierIndex = index },
+                    onClearPlanned = { viewModel.onPlannedCounterTypeChanged(index, "") },
                     dropdownExpanded = soldierDropdownIndex == index,
                     onDropdownExpandedChange = { soldierDropdownIndex = if (it) index else -1 }
                 )
@@ -263,10 +217,15 @@ fun ForceNoteEditScreen(
             Spacer(modifier = Modifier.height(32.dp))
         }
 
-        quickQuerySoldierName?.let { name ->
+        if (quickQuerySoldierIndex != -1) {
+            val config = editState.soldierConfigs[quickQuerySoldierIndex]
             QuickCounterBottomSheet(
-                soldierName = name,
-                onDismissRequest = { quickQuerySoldierName = null }
+                soldierName = config.soldierType,
+                onDismissRequest = { quickQuerySoldierIndex = -1 },
+                onSelectCounter = { 
+                    viewModel.onPlannedCounterTypeChanged(quickQuerySoldierIndex, it)
+                    quickQuerySoldierIndex = -1
+                }
             )
         }
     }
@@ -280,7 +239,8 @@ private fun SoldierConfigRow(
     canRemove: Boolean,
     onTypeChanged: (String) -> Unit,
     onRemove: () -> Unit,
-    onQuickQuery: (String) -> Unit,
+    onQuickQuery: () -> Unit,
+    onClearPlanned: () -> Unit,
     dropdownExpanded: Boolean,
     onDropdownExpandedChange: (Boolean) -> Unit
 ) {
@@ -293,87 +253,110 @@ private fun SoldierConfigRow(
         shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
     ) {
-        Row(
-            modifier = Modifier.padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            ExposedDropdownMenuBox(
-                expanded = dropdownExpanded,
-                onExpandedChange = onDropdownExpandedChange,
-                modifier = Modifier.weight(1f)
+        Column(modifier = Modifier.padding(8.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                OutlinedTextField(
-                    value = configItem.soldierType,
-                    onValueChange = { },
-                    readOnly = true,
-                    placeholder = { Text("点击选择兵种", style = MaterialTheme.typography.bodySmall) },
-                    trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(16.dp)) },
-                    modifier = Modifier.menuAnchor().fillMaxWidth(),
-                    singleLine = true,
-                    shape = RoundedCornerShape(8.dp),
-                    textStyle = MaterialTheme.typography.bodySmall
-                )
-                ExposedDropdownMenu(
+                ExposedDropdownMenuBox(
                     expanded = dropdownExpanded,
-                    onDismissRequest = { 
-                        onDropdownExpandedChange(false)
-                        selectedCategory = null
-                    }
+                    onExpandedChange = onDropdownExpandedChange,
+                    modifier = Modifier.weight(1f)
                 ) {
-                    if (selectedCategory == null) {
-                        DropdownMenuItem(
-                            text = { Text("原版兵种", style = MaterialTheme.typography.bodySmall) },
-                            trailingIcon = { Icon(Icons.Default.ChevronRight, contentDescription = null, modifier = Modifier.size(16.dp)) },
-                            onClick = { selectedCategory = "original" }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("新兵种", style = MaterialTheme.typography.bodySmall) },
-                            trailingIcon = { Icon(Icons.Default.ChevronRight, contentDescription = null, modifier = Modifier.size(16.dp)) },
-                            onClick = { selectedCategory = "new" }
-                        )
-                    } else {
-                        DropdownMenuItem(
-                            text = { 
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, modifier = Modifier.size(16.dp))
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(if (selectedCategory == "original") "原版兵种" else "新兵种", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.bodySmall)
-                                }
-                            },
-                            onClick = { selectedCategory = null }
-                        )
-                        val listToShow = if (selectedCategory == "original") originalSoldiers else newSoldiers
-                        listToShow.forEach { name ->
+                    OutlinedTextField(
+                        value = configItem.soldierType,
+                        onValueChange = { },
+                        readOnly = true,
+                        placeholder = { Text("点击选择兵种", style = MaterialTheme.typography.bodySmall) },
+                        trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                        modifier = Modifier.menuAnchor().fillMaxWidth(),
+                        singleLine = true,
+                        shape = RoundedCornerShape(8.dp),
+                        textStyle = MaterialTheme.typography.bodySmall
+                    )
+                    ExposedDropdownMenu(
+                        expanded = dropdownExpanded,
+                        onDismissRequest = { 
+                            onDropdownExpandedChange(false)
+                            selectedCategory = null
+                        }
+                    ) {
+                        if (selectedCategory == null) {
                             DropdownMenuItem(
-                                text = { Text(name, style = MaterialTheme.typography.bodySmall) },
-                                onClick = {
-                                    onTypeChanged(name)
-                                    onDropdownExpandedChange(false)
-                                    selectedCategory = null
-                                }
+                                text = { Text("原版兵种", style = MaterialTheme.typography.bodySmall) },
+                                trailingIcon = { Icon(Icons.Default.ChevronRight, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                                onClick = { selectedCategory = "original" }
                             )
+                            DropdownMenuItem(
+                                text = { Text("新兵种", style = MaterialTheme.typography.bodySmall) },
+                                trailingIcon = { Icon(Icons.Default.ChevronRight, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                                onClick = { selectedCategory = "new" }
+                            )
+                        } else {
+                            DropdownMenuItem(
+                                text = { 
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, modifier = Modifier.size(16.dp))
+                                        Spacer(modifier = Modifier.width(6.dp))
+                                        Text(if (selectedCategory == "original") "原版兵种" else "新兵种", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.bodySmall)
+                                    }
+                                },
+                                onClick = { selectedCategory = null }
+                            )
+                            val listToShow = if (selectedCategory == "original") originalSoldiers else newSoldiers
+                            listToShow.forEach { name ->
+                                DropdownMenuItem(
+                                    text = { Text(name, style = MaterialTheme.typography.bodySmall) },
+                                    onClick = {
+                                        onTypeChanged(name)
+                                        onDropdownExpandedChange(false)
+                                        selectedCategory = null
+                                    }
+                                )
+                            }
                         }
                     }
                 }
-            }
 
-            IconButton(
-                onClick = { onQuickQuery(configItem.soldierType) },
-                enabled = configItem.soldierType.isNotBlank(),
-                modifier = Modifier.size(40.dp)
-            ) {
-                Icon(
-                    Icons.Default.MilitaryTech, 
-                    contentDescription = "查询克制", 
-                    tint = if (configItem.soldierType.isNotBlank()) Gold700 else Gray400,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+                IconButton(
+                    onClick = onQuickQuery,
+                    enabled = configItem.soldierType.isNotBlank(),
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Icon(
+                        Icons.Default.MilitaryTech, 
+                        contentDescription = "查询克制", 
+                        tint = if (configItem.soldierType.isNotBlank()) Gold700 else Gray400,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
 
-            if (canRemove) {
-                IconButton(onClick = onRemove, modifier = Modifier.size(32.dp)) {
-                    Icon(Icons.Default.Close, contentDescription = "移除", tint = Red700.copy(alpha = 0.7f), modifier = Modifier.size(18.dp))
+                if (canRemove) {
+                    IconButton(onClick = onRemove, modifier = Modifier.size(32.dp)) {
+                        Icon(Icons.Default.Close, contentDescription = "移除", tint = Red700.copy(alpha = 0.7f), modifier = Modifier.size(18.dp))
+                    }
+                }
+            }
+            
+            if (configItem.plannedCounterType.isNotBlank()) {
+                Spacer(modifier = Modifier.height(4.dp))
+                Surface(
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                    shape = RoundedCornerShape(4.dp),
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(Icons.Default.Flag, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(14.dp))
+                        Spacer(modifier = Modifier.width(4.dp))
+                        Text("计划上阵: ${configItem.plannedCounterType}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+                        Spacer(modifier = Modifier.width(4.dp))
+                        IconButton(onClick = onClearPlanned, modifier = Modifier.size(16.dp)) {
+                            Icon(Icons.Default.Clear, contentDescription = "清除", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(12.dp))
+                        }
+                    }
                 }
             }
         }
